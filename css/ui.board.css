@@ -1,0 +1,74 @@
+/*
+ * jQuery UI Board 1.0
+ *
+ * Copyright (c) 2012 Yaacov Zamir (kobi.zamir at gmail)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ */
+ 
+.ui-board {
+  position: absolute;
+  width: 750px; 
+  height: 750px; 
+  background-color: white;
+  overflow: hidden;
+}
+
+.ui-board li {
+   list-style: none;
+}
+
+.ui-board img.background, .ui-board p.value {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.ui-board-element.ui-resizable {
+  border: 1px gray dashed;
+  background-color: lightblue;
+  z-index: 1000;
+}
+
+.ui-board-element {
+  position: absolute;
+  width: 150px; 
+  height: 150px; 
+}
+
+.ui-resizable-handle {
+  position: absolute;
+  width: 8px; 
+  height: 8px; 
+  background-color: yellow;
+  background-image: none!important;
+}
+.ui-resizable-se {
+  bottom: -4px;
+  right: -4px;
+}
+.ui-resizable-sw {
+  bottom: -4px;
+  left: -4px;
+}
+.ui-resizable-ne {
+  top: -4px;
+  right: -4px;
+}
+.ui-resizable-nw {
+  top: -4px;
+  left: -4px;
+}
+
+.ui-selecting .ui-resizable-handle { 
+    background: #FECA40;
+}
+.ui-selected .ui-resizable-handle { 
+    background: #F39814; color: white; 
+}
+

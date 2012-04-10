@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link type="text/css" href="css/smoothness/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
+  <link type="text/css" href="css/ui.board.css" rel="stylesheet" />
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="js/ui.board.element.js"></script>
+  <script type="text/javascript" src="js/ui.board.js"></script>
+  
+  <script>
+    $(function() {
+      
+      $( ".board" ).board({"edit": true});
+      
+      el1 = $( ".board" ).board("addElement");
+      el2 = $( ".board" ).board("addElement");
+      el3 = $( ".board" ).board("addElement");
+      el4 = $( ".board" ).board("addElement");
+      
+      el1.board_element("setData", "x", 120);
+      el1.board_element("setData", "y", 125);
+      el1.board_element("setValue", 125.123);
+      
+      console.log($( ".board" ).board("stringify"));
+      
+    });
+  </script>
+  <title>Hello world</title>
+</head>
+
+<body>
+  <div class="board"></div>
+</body>
+</html>

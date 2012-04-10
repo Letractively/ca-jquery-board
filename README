@@ -1,0 +1,27 @@
+A jQuery-ui board widget
+========================
+
+The jQuery ui board widget use jQuery-ui draggable, resizable and selectable 
+widgets to create an editable view of objects.
+
+Edit mode
+---------
+In edit mode, objects are interactive. jQuery ui board objects can be selected, 
+dragged and resized using the mouse. Objects can be resized and dragged 
+together, change their visibility order and view parameters.
+
+View mode
+---------
+In view mode, jQuery ui board objects are not interactive. Objects can change 
+their view in view mode using the widget API.
+
+Load and Save
+-------------
+jQuery ui board objects can be serialized into JSON strings. jQuery ui board 
+objects can be loaded from JSON strings or data objects.
+
+Customize
+---------
+Query ui board use hooks on the widget set-option and set-value to customize 
+the view mode and edit mode widget behavior. 
+
