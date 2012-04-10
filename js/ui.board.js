@@ -66,25 +66,28 @@
         // react to option changes after initialization
         _setOption: function( key, value ) {
             
-            // highjack options that start with "element..." and "value..."
+            // highjack the options that start with "element..." and "value..."
             //  use this options to manipulate the board elements
             if ( key.slice( 0, 7 ) === "element" ) {
-                // this is an element data object
+                // this is an element data option
+                // this options effect the board-elements
                 
                 // set the element
-                var new_element = this.addElement();
-                new_element.board_element( "update", value );
+                var el = this.addElement();
+                el.board_element( "update", value );
             } else if ( key.slice( 0, 5 ) === "value" ) {
-                // this is an element value
+                // this is an element value option
+                // this options effect the board-elements
                 
                 // set the element value
                 if ( typeof value.state !== "string" ) {
                     value.state = "normal";
                 }
                 $("#" + value.id).board_element( "setValue", value.value, value.state );
-            
             } else {
                 // regular options
+                // this options effect the board
+                
                 switch ( key ) {
                     case "image":
                         this.options[ key ] = value;
@@ -191,7 +194,8 @@
             $.each(data, function ( k, v ) {
                 // set option will check for element options
                 // and implement them on the board elements
-                // regular options will be implemented on the board
+                // regular options will be implemented on the board.
+                //
                 // options that effect the elements starts with:
                 //      element - effect element static data
                 //      value - effect element dynamic view
@@ -217,9 +221,11 @@
             if ( this._isElement( this._clipbaord ) ) {
                 // copy the clipboard
                 var new_element = this._clipbaord.clone();
-                this.element.find( "ul" ).append(new_element);
                 
                 // append the new copy
+                this.element.find( "ul" ).append(new_element);
+                
+                // make current element the selected one
                 $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
                 new_element.addClass( "ui-selected" );
                 new_element.board_element();
@@ -227,9 +233,11 @@
         },
         
         // add / delete elements
-        addElement: function() {
-            // create a new element
-            el = $( "<li></li>" );
+        addElement: function( el ) {
+            // if no element, create a new element
+            if ( typeof el !== "object") {
+              el = $( "<li></li>" );
+            }
             
             // append the new element to the list
             this.element.find( "ul" ).append( el );
