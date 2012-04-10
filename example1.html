@@ -25,6 +25,10 @@
       
       console.log($( ".board" ).board("stringify"));
       
+      el3.board_element("setValue", 12.34);
+      el3.click(function (ev) {$(this).board_element("setValue", 123.4);});
+      el3.dblclick(function (ev) {$(this).board_element("setValue", 1.234);});
+      
     });
   </script>
   <title>Hello world</title>
