@@ -291,13 +291,10 @@
                 el = this._getSelected();
             }
             
-            var clipbaord = this._clipbaord.clone(true);
-            clipbaord.board_element();
-            
             // paste size from clipboard to elment
             if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
                 $.each(["w","h"], function( i, key) {
-                    el.board_element( "setData", key, clipbaord.board_element( "getData", key ) );
+                    el.board_element( "setData", key, this._clipbaord.board_element( "getData", key ) );
                 });
             }
         },
@@ -308,14 +305,9 @@
                 el = this._getSelected();
             }
             
-            var clipbaord = this._clipbaord.clone(true);
-            clipbaord.board_element();
-            
-            console.log(clipbaord.board_element( "getData", "color" ));
-            
             // paste size from clipboard to elment
             if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
-                $.each( clipbaord.board_element( "getData" ), function ( k, v ) {
+                $.each( this._clipbaord.board_element( "getData" ), function ( k, v ) {
                     // add all data except the administrative data
                     // id and position
                     //  e.g. id, index, prev ...
@@ -332,15 +324,22 @@
             // if we have data in the clipboard
             if ( this._isElement( this._clipbaord ) ) {
                 // copy the clipboard
-                var new_element = this._clipbaord.clone(true);
-                
-                // append the new copy
-                this.element.find( "ul" ).append(new_element);
+                var new_element = this.addElement();
                 
                 // make current element the selected one
                 $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
                 new_element.addClass( "ui-selected" );
-                new_element.board_element();
+                
+                // set initial position and sise
+                new_element.board_element( "setData", "x", 10);
+                new_element.board_element( "setData", "y", 10);
+                new_element.board_element( "setData", "w", 
+                    this._clipbaord.board_element( "getData", "w" ));
+                new_element.board_element( "setData", "h", 
+                    this._clipbaord.board_element( "getData", "h" ));
+                
+                // copy data
+                this.pasteStyle(new_element);
             }
         },
         

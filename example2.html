@@ -44,6 +44,43 @@
 </head>
 
 <body>
+    <!-- edit toolbar -->
+    <div>
+        <input type="image" title="copy" onClick='
+            $( "#board" ).board( "copy" );
+        '  src="example-img/buttons/edit_copy.png" />
+        <input type="image" title="paste" onClick='
+            $( "#board" ).board( "paste" );
+        '  src="example-img/buttons/edit_paste.png" />
+        <input type="image" title="paste style" onClick='
+            $( "#board" ).board( "pasteStyle" );
+        '  src="example-img/buttons/edit_paste_style.png" />
+        <input type="image" title="delete" onClick='
+            $( "#board" ).board( "delElement" );
+        '  src="example-img/buttons/edit_delete.png" />
+        <input type="image" title="new" onClick='
+            $( "#board" ).board( "addElement" );
+        '  src="example-img/buttons/edit_new.png" />
+    </div>
+    
+    <!-- canvas toolbar -->
+    <div>
+        <input type="image" title="grid" onClick='
+            $( this ).toggleClass( "on" );
+            
+            var on = $( this ).hasClass( "on" );
+            $( "#board" ).board( "option", "grid-show", on );
+            $( "#board" ).board( "option", "grid-snap", on );
+        '  src="example-img/buttons/grid_xy.png" />
+        
+        <input type="image" title="down" onClick='
+            $( "#board" ).board( "downElement" );
+        '  src="example-img/buttons/selection-down.png" />
+        <input type="image" title="up" onClick='
+            $( "#board" ).board( "upElement" );
+        '  src="example-img/buttons/selection-up.png" />
+    </div>
+    
     <div id="board"></div>
 </body>
 </html>
