@@ -232,7 +232,7 @@
                 this.element.append( '<p class="value"></p>' )
             }
             
-            this.element.find( "p" ).text( this.options.value );
+            this.element.find( "p.value" ).text( this.options.value );
         },
         
         _updateDate: function() {

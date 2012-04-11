@@ -48,7 +48,7 @@
             
             this._setOption( "grid", this.options.grid );
             this._setOption( "grid-show", this.options.grid_show );
-            this._setOption( "grid_snap", this.options.grid_snap );
+            this._setOption( "grid-snap", this.options.grid_snap );
             
             this._setOption( "color", this.options.color );
             this._setOption( "border", this.options.border );
@@ -192,16 +192,16 @@
                 // get the elemants list
                 var element_list = this.element.find( "ul.ui-board-elements-list" );
                 
-                // create the grid main div
+                // create the grid main div and insert it before the elemants list
                 var element_grid = $( '<div class="grid-box"></div>' );
                 element_list.before( element_grid );
                 
                 // draw the grid lines
                 for (x = x_step; x < w; x += x_step) {
-                    element_grid.append( $( '<div class="grid_lines" style="height:' + h + 'px;left:' + x + 'px"></div>' ) );
+                    element_grid.append( '<div class="grid_lines" style="height:' + h + 'px;left:' + x + 'px"></div>' );
                 }
                 for (y = y_step; y < h; y += y_step) {
-                    element_grid.append( $( '<div class="grid_lines" style="width:' + w + 'px;top:' + y + 'px"></div>' ) );
+                    element_grid.append( '<div class="grid_lines" style="width:' + w + 'px;top:' + y + 'px"></div>' );
                 }
             }
         },
