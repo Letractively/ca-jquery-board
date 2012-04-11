@@ -14,36 +14,113 @@
         // create the board in edit mode
         $( "#board" ).board( {"edit": true} );
         
-        // create custom view
-        $( "#board" ).on("setValue", function (e, d) {console.log(d.ui.board_element("option", "value"))})
+        // create custom element types
+        $( "#board" ).on( "setData", function ( e, d ) {
+            // if this is not a set type command 
+            // continue to the default handeler
+            if ( d.key !== "type" ) {
+                return false;
+            }
+            
+            // use the element type to chose the right view
+            switch ( d.value ) {
+                case "flower":
+                    var url = "example-img/objects/flower-1.png";
+                    
+                    // remove the default value label
+                    d.ui.find( "p.value" ).remove();
+                    
+                    // insert the flower image
+                    d.ui.board_element( "setData", "color", "transparent" );
+                    d.ui.children( "img.background" ).remove();
+                    d.ui.append( '<img class="background" src="' + url + '"/>' );
+                    
+                    // do not continue to the default handeler
+                    return true;
+                case "tree":
+                    var url = "example-img/objects/tree.png";
+                    
+                    // remove the default value label
+                    d.ui.find( "p.value" ).remove();
+                    
+                    // insert the tree image
+                    d.ui.board_element( "setData", "color", "transparent" );
+                    d.ui.children( "img.background" ).remove();
+                    d.ui.append( '<img class="background" src="' + url + '"/>' );
+                    
+                    // do not continue to the default handeler
+                    return true;
+            }
+            
+            // continue to the default handeler
+            return false;
+        });
         
+        // create custom view
+        $( "#board" ).on( "setValue", function ( e, d ) {
+            // get the element type
+            var ui_type = d.ui.board_element( "getData", "type" );
+            
+            // use the element type to chose the right view
+            switch ( ui_type ) {
+                case "flower":
+                    var value = parseInt( d.value );
+                    var url = "example-img/objects/flower-" + (value % 4 + 1) + ".png";
+                    d.ui.children( "img.background" ).attr( "src", url);
+                    
+                    // do not continue to the default handeler
+                    return true;
+                case "tree":
+                    var url = "example-img/objects/tree.png";
+                    d.ui.children( "img.background" ).attr( "src", url);
+                    
+                    // do not continue to the default handeler
+                    return true;
+            }
+            
+            // continue to the default handeler
+            return false;
+        });
+        
+        // change element value when clicking on it
+        $( "#board" ).on( "dblclick", "li", function ( e, d ) {
+            // get the element curret value
+            var value = parseInt($(this).board_element( "option", "value" ));
+            
+            // increase value by one
+            value += 1;
+            $(this).board_element( "setValue", value );
+        });
     });
     </script>
     <title>jQuery ui board</title>
 </head>
 
 <body>
-    <!-- edit toolbar -->
+    
     <div>
+        <!-- edit toolbar -->
         <input type="image" title="copy" onClick='
             $( "#board" ).board( "copy" );
         '  src="example-img/buttons/edit_copy.png" />
         <input type="image" title="paste" onClick='
             $( "#board" ).board( "paste" );
         '  src="example-img/buttons/edit_paste.png" />
-        <input type="image" title="paste style" onClick='
-            $( "#board" ).board( "pasteStyle" );
-        '  src="example-img/buttons/edit_paste_style.png" />
         <input type="image" title="delete" onClick='
             $( "#board" ).board( "delElement" );
         '  src="example-img/buttons/edit_delete.png" />
-        <input type="image" title="new" onClick='
-            var el = $( "#board" ).board( "addElement" );
-        '  src="example-img/buttons/edit_new.png" />
-    </div>
-    
-    <!-- canvas toolbar -->
-    <div>
+        <input type="image" title="new flower" onClick='
+            var el = $( "<li data-type=\"flower\"></li>" );
+            $( "#board" ).board( "addElement", el );
+            el.board_element("SetValue", 3);
+        '  src="example-img/objects/flower-1.png" width="60" height="60" />
+        <input type="image" title="new tree" onClick='
+            var el = $( "<li data-type=\"tree\"></li>" );
+            $( "#board" ).board( "addElement", el );
+            el.board_element("SetValue", 3);
+        '  src="example-img/objects/tree.png" width="60" height="60" />
+        
+        <!-- canvas toolbar -->
         <input type="image" title="grid" onClick='
             $( this ).toggleClass( "on" );
             
@@ -51,6 +128,12 @@
             $( "#board" ).board( "option", "grid-show", on );
             $( "#board" ).board( "option", "grid-snap", on );
         '  src="example-img/buttons/grid_xy.png" />
+        <input class="on" type="image" title="edit" onClick='
+            $( this ).toggleClass( "on" );
+            
+            var on = $( this ).hasClass( "on" );
+            $( "#board" ).board( "option", "edit", on );
+        '  src="example-img/buttons/edit_paste_style.png" />
         
         <input type="image" title="down" onClick='
             $( "#board" ).board( "downElement" );
@@ -58,6 +141,10 @@
         <input type="image" title="up" onClick='
             $( "#board" ).board( "upElement" );
         '  src="example-img/buttons/selection-up.png" />
+        
+        <input type="image" title="dump JSON" onClick='
+            console.log( $( "#board" ).board( "stringify" ) );
+        '  src="example-img/buttons/file_export.png" />
     </div>
     
     <div id="board"></div>

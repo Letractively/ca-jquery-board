@@ -59,6 +59,11 @@ div.grid-box {
   z-index: 1000;
 }
 
+.ui-board-element.ui-resizable-disabled {
+  opacity: 1;
+  border-color: transparent;
+}
+
 .ui-board-element {
   position: absolute;
   width: 150px; 

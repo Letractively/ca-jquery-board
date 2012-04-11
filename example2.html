@@ -44,8 +44,9 @@
 </head>
 
 <body>
-    <!-- edit toolbar -->
+    
     <div>
+        <!-- edit toolbar -->
         <input type="image" title="copy" onClick='
             $( "#board" ).board( "copy" );
         '  src="example-img/buttons/edit_copy.png" />
@@ -61,10 +62,8 @@
         <input type="image" title="new" onClick='
             $( "#board" ).board( "addElement" );
         '  src="example-img/buttons/edit_new.png" />
-    </div>
-    
-    <!-- canvas toolbar -->
-    <div>
+        
+        <!-- canvas toolbar -->
         <input type="image" title="grid" onClick='
             $( this ).toggleClass( "on" );
             
