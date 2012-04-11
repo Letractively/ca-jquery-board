@@ -26,7 +26,7 @@
             edit: false,
             image: false,
             color: "white",
-            border: false,
+            border: "gray",
             border_width: "1px",
             border_style: "solid",
             grid: [50, 50],
