@@ -64,6 +64,11 @@
             // use the element type to chose the right view
             switch ( ui_type ) {
                 case "flower":
+                    // if this is not a number do not change the view
+                    if ( !$.isNumeric( d.value ) ) {
+                        return true;
+                    }
+                    
                     var value = parseInt( d.value );
                     var url = "example-img/objects/flower-" + (value % 4 + 1) + ".png";
                     d.ui.children( "img.background" ).attr( "src", url);
