@@ -46,6 +46,10 @@
             this._setOption( "border-width", this.options.border_width );
             this._setOption( "border-style", this.options.border_style );
             
+            this._setOption( "grid", this.options.grid );
+            this._setOption( "grid-show", this.options.grid_show );
+            this._setOption( "grid_snap", this.options.grid_snap );
+            
             this._setOption( "color", this.options.color );
             this._setOption( "border", this.options.border );
             this._setOption( "image", this.options.image );
