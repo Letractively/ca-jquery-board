@@ -128,7 +128,7 @@
             // call triger for setting data
             // if the triger return true stop here
             //  used to set up custom options
-            if ( this.element.triggerHandler( "setData", {"key":key, "value":value} ) ) {
+            if ( this._getBoard().triggerHandler( "setData" , {"ui": this.element, "key":key, "value":value} ) ) {
                 return;
             }
             
@@ -223,7 +223,7 @@
             // call triger for setting the elment value value
             // if the triger return true stop here
             //  used to set up custom view for a value
-            if ( this.element.triggerHandler( "setValue" , {"value":value, "state":state} ) ) {
+            if ( this._getBoard().triggerHandler( "setValue" , {"ui": this.element, "value":value, "state":state} ) ) {
                 return;
             }
             
