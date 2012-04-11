@@ -1,9 +1,9 @@
-Copyright (c) 2011 Paul Bakaus, http://jqueryui.com/
+Copyright (c) 2012 Yaacov Zamir (kobi.zamir at gmail)
 
 This software consists of voluntary contributions made by many
-individuals (AUTHORS.txt, http://jqueryui.com/about) For exact
+individuals (AUTHORS) For exact
 contribution history, see the revision history and logs, available
-at http://jquery-ui.googlecode.com/svn/
+at http://code.google.com/p/ca-jquery-board/
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
