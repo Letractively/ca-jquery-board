@@ -83,22 +83,21 @@
             // add custom class
             this.element.addClass( "ui-board-element" );
             
-            // if we are in edit mode add dragging and resizing
-            //  options
-            if (board.board( "option", "edit" )) {
-                this.element.resizable( this.options.resizable);
-                this.element.draggable( this.options.draggable );
-                
-                // when clicking deselect all other selected elemens
-                this.element.click( function () {
-                    $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
-                    $( this ).addClass( "ui-selected" );
-                });
-            }
+            this.element.resizable( this.options.resizable );
+            this.element.draggable( this.options.draggable );
             
-            // set default options
-            this._setOption("color", this.options.color);
-            this._setOption("image", this.options.image);
+            // when clicking deselect all other selected elemens
+            this.element.click( function () {
+                $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
+                $( this ).addClass( "ui-selected" );
+            });
+                
+            // if we are not in edit mode disable the dragging and resizing
+            //  options
+            if (!board.board( "option", "edit" )) {
+                this.element.resizable( "disable" );
+                this.element.draggable( "disable" );
+            }
             
             // update all other optional data and value
             this.update();
@@ -190,12 +189,12 @@
                     break;
                  case "h":
                     if (value) {
-                        this.element.css( "height", value );
+                        this.element.height( value );
                     }
                     break;
                 case "w":
                     if (value) {
-                        this.element.css( "width", value );
+                        this.element.width( value );
                     }
                     break;
                 default:
@@ -203,7 +202,15 @@
             }
         },
         
-        setValue: function ( value, state ) {
+        getData: function( key ) {
+            // update none data-set data
+            this._updateDate();
+            
+            // return the data
+            return this.element.data( key );
+        },
+        
+        setValue: function( value, state ) {
             
             // update value and state options
             if ( typeof state === "string" ) {
@@ -228,7 +235,7 @@
             this.element.find( "p" ).text( this.options.value );
         },
         
-        stringify: function() {
+        _updateDate: function() {
             // update element id
             if ( typeof this.element.attr( "id" ) === "string" ) {
                 // if we have an id, use it
@@ -245,6 +252,11 @@
             this.element.data( "y", this.element.css( "top" ) );
             this.element.data( "w", this.element.css( "width" ) );
             this.element.data( "h", this.element.css( "height" ) );
+        },
+        
+        stringify: function() {
+            // update none data-set data
+            this._updateDate()
             
             // create the JSON string
             var json = '{"index":"' + this.element.index() +'"';
@@ -264,8 +276,9 @@
             var el = this;
             
             // init the data object
+            // if we did not get any data, use the elements initial data
             if ( typeof data !== "object" ) {
-                data = {};
+                data = this.element.data();
             }
             
             // loop on all data elements and insert them to the element

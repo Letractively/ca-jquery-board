@@ -28,7 +28,10 @@
             color: "white",
             border: false,
             border_width: "1px",
-            border_style: "solid"
+            border_style: "solid",
+            grid: [50, 50],
+            grid_show: false,
+            grid_snap: false
         },
         
         // used to store copy / paste data
@@ -89,6 +92,16 @@
                 // this options effect the board
                 
                 switch ( key ) {
+                    case "edit":
+                        this.options[ key ] = value;
+                        if ( value ) {
+                            this.element.find( "li.ui-board-element" ).resizable( "enable" );
+                            this.element.find( "li.ui-board-element" ).draggable( "enable" );
+                        } else {
+                            this.element.find( "li.ui-board-element" ).resizable( "disable" );
+                            this.element.find( "li.ui-board-element" ).draggable( "disable" );
+                        }
+                        break;
                     case "image":
                         this.options[ key ] = value;
                         
@@ -130,9 +143,61 @@
                             this.element.css( "border-style", "solid" );
                         }
                         break;
+                    case "grid":
+                        this.options[ key ] = value;
+                        // update grid
+                        this._updateGridView();
+                        break;
+                    case "grid-snap":
+                        var grid = this.options[ "grid" ];
+                        
+                        this.options[ key ] = value;
+                        
+                        if ( value ) {
+                            $( "li.ui-board-element" ).resizable( "option", "grid", grid );
+                            $( "li.ui-board-element" ).draggable( "option", "grid", grid );
+                        } else {
+                            $( "li.ui-board-element" ).resizable( "option", "grid", false );
+                            $( "li.ui-board-element" ).draggable( "option", "grid", false );
+                        }
+                        break;
+                    case "grid-show":
+                        this.options[ key ] = value;
+                        // update grid
+                        this._updateGridView();
+                        break;
                     default:
                         this.options[ key ] = value;
                         break;
+                }
+            }
+        },
+        
+        _updateGridView: function() {
+            // remove old grid elemants
+            this.element.children( "div.grid-box" ).remove();
+            
+            if ( this.options[ "grid-show" ] ) {
+                var x;
+                var y;
+                var x_step = this.options[ "grid" ][0];
+                var y_step = this.options[ "grid" ][1];
+                var w = this.element.width();
+                var h = this.element.height();
+                
+                // get the elemants list
+                var element_list = this.element.find( "ul.ui-board-elements-list" );
+                
+                // create the grid main div
+                var element_grid = $( '<div class="grid-box"></div>' );
+                element_list.before( element_grid );
+                
+                // draw the grid lines
+                for (x = x_step; x < w; x += x_step) {
+                    element_grid.append( $( '<div class="grid_lines" style="height:' + h + 'px;left:' + x + 'px"></div>' ) );
+                }
+                for (y = y_step; y < h; y += y_step) {
+                    element_grid.append( $( '<div class="grid_lines" style="width:' + w + 'px;top:' + y + 'px"></div>' ) );
                 }
             }
         },
@@ -207,12 +272,55 @@
         copy: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             // clone current elements to clipboard
             if ( this._isElement( el ) ) {
-                this._clipbaord = el.clone();
+                this._clipbaord = el.clone(true);
+            }
+        },
+        
+        pasteSize: function( el ) {
+            // if no element, use the selected element
+            if ( typeof el !== "object") {
+                el = this._getSelected();
+            }
+            
+            var clipbaord = this._clipbaord.clone(true);
+            clipbaord.board_element();
+            
+            // paste size from clipboard to elment
+            if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
+                $.each(["w","h"], function( i, key) {
+                    el.board_element( "setData", key, clipbaord.board_element( "getData", key ) );
+                });
+            }
+        },
+        
+        pasteStyle: function( el ) {
+            // if no element, use the selected element
+            if ( typeof el !== "object") {
+                el = this._getSelected();
+            }
+            
+            var clipbaord = this._clipbaord.clone(true);
+            clipbaord.board_element();
+            
+            console.log(clipbaord.board_element( "getData", "color" ));
+            
+            // paste size from clipboard to elment
+            if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
+                $.each( clipbaord.board_element( "getData" ), function ( k, v ) {
+                    // add all data except the administrative data
+                    // id and position
+                    //  e.g. id, index, prev ...
+                    if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && 
+                        k !== "index" && k !== "id" && 
+                        k !== "x" && k !== "y" && k !== "w" && k !== "h" ) {
+                            el.board_element( "setData", k, v);
+                    }
+                });
             }
         },
         
@@ -220,7 +328,7 @@
             // if we have data in the clipboard
             if ( this._isElement( this._clipbaord ) ) {
                 // copy the clipboard
-                var new_element = this._clipbaord.clone();
+                var new_element = this._clipbaord.clone(true);
                 
                 // append the new copy
                 this.element.find( "ul" ).append(new_element);
@@ -236,7 +344,7 @@
         addElement: function( el ) {
             // if no element, create a new element
             if ( typeof el !== "object") {
-              el = $( "<li></li>" );
+                el = $( "<li></li>" );
             }
             
             // append the new element to the list
@@ -250,7 +358,7 @@
         delElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -281,7 +389,7 @@
         topElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -295,7 +403,7 @@
         bottomElement: function (el) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -309,7 +417,7 @@
         upElement: function (el) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -326,7 +434,7 @@
         downElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-              el = this._getSelected();
+                el = this._getSelected();
             }
             
             if ( !this._isElement( el ) ) {

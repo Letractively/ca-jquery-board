@@ -1,0 +1,13 @@
+IMAGES LICENSE:
+---------------
+
+packaging:
+if you distribut the ca-jquery-board code under the MIT or GPL licenses
+please remove the example-img directory before packaging
+
+copyright and license of images:
+The images in this folder are not part of ca-jquery-board code
+The images are copyrighted and licensed by different creators and different licenses
+please read the README file for each image set.
+
+

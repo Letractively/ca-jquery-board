@@ -16,11 +16,14 @@
       
       el1 = $( ".board" ).board("addElement");
       el2 = $( ".board" ).board("addElement");
-      el3 = $( ".board" ).board("addElement");
+      
+      el3 = $('<li data-color="lightgray"></li>')
+      el3 = $( ".board" ).board("addElement", el3);
       el4 = $( ".board" ).board("addElement");
       
       el1.board_element("setData", "x", 120);
       el1.board_element("setData", "y", 125);
+      el1.board_element("setData", "color", "green");
       el1.board_element("setValue", 125.123);
       
       console.log($( ".board" ).board("stringify"));
@@ -35,6 +38,7 @@
 </head>
 
 <body>
+    <br><br><br><br>
   <div class="board"></div>
 </body>
 </html>
