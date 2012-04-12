@@ -294,7 +294,7 @@
             if ( this._isElement( el ) ) {
                 // make sure the x,y,w,h of the elements are up to date
                 el.board_element( "updateData" );
-                
+                    
                 // copy to clipboard with data
                 this._clipbaord = el.clone(true);
             }

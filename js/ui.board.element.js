@@ -204,7 +204,7 @@
         
         getData: function( key ) {
             // update none data-set data
-            this.updateDate();
+            this.updateData();
             
             // return the data
             return this.element.data( key );
@@ -235,7 +235,7 @@
             this.element.find( "p.value" ).text( this.options.value );
         },
         
-        updateDate: function() {
+        updateData: function() {
             // update element id
             if ( typeof this.element.attr( "id" ) === "string" ) {
                 // if we have an id, use it
@@ -256,7 +256,7 @@
         
         stringify: function() {
             // update none data-set data
-            this.updateDate()
+            this.updateData()
             
             // create the JSON string
             var json = '{"index":"' + this.element.index() +'"';
