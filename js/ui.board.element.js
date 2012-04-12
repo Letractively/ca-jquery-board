@@ -87,8 +87,12 @@
             this.element.draggable( this.options.draggable );
             
             // when clicking deselect all other selected elemens
-            this.element.click( function () {
-                $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
+            this.element.click( function ( ev ) {
+                // if ctrl key is pressed, do not deselect
+                if ( !ev.ctrlKey ) {
+                    $( this ).siblings( "li.ui-board-element.ui-selected" )
+                        .removeClass( "ui-selected" );
+                }
                 $( this ).addClass( "ui-selected" );
             });
                 

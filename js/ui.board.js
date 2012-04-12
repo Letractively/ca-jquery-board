@@ -31,7 +31,8 @@
             border_style: "solid",
             grid: [50, 50],
             grid_show: false,
-            grid_snap: false
+            grid_snap: false,
+            animate: 100
         },
         
         // used to store copy / paste data
@@ -313,7 +314,7 @@
         // add / delete elements
         addElement: function( el ) {
             // if no element, create a new element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = $( "<li></li>" );
             }
             

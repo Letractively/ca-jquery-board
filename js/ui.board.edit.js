@@ -19,7 +19,7 @@
 
         copy: function( el ) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
@@ -29,13 +29,13 @@
                 el.board_element( "updateData" );
                     
                 // copy to clipboard with data
-                this._clipbaord = el.clone(true);
+                this._clipbaord = el.clone( true );
             }
         },
         
         pasteSize: function( el ) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
@@ -51,12 +51,12 @@
         
         pasteStyle: function( el, source ) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
             // if no source, use clipboard
-            if ( typeof source !== "object") {
+            if ( typeof source !== "object" ) {
                 source = this._clipbaord;
             }
             
@@ -97,8 +97,8 @@
                     new_element.addClass( "ui-selected" );
                     
                     // set initial position and sise
-                    new_element.board_element( "setData", "x", x - offset_x);
-                    new_element.board_element( "setData", "y", y - offset_y);
+                    new_element.board_element( "setData", "x", x - offset_x );
+                    new_element.board_element( "setData", "y", y - offset_y );
                     new_element.board_element( "setData", "w", w );
                     new_element.board_element( "setData", "h", h );
                     

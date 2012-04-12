@@ -18,7 +18,7 @@
     $.extend($.ui.board.prototype, {
         topElement: function( el ) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
@@ -36,7 +36,7 @@
         
         bottomElement: function (el) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
@@ -54,7 +54,7 @@
         
         upElement: function (el) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
@@ -74,7 +74,7 @@
         
         downElement: function( el ) {
             // if no element, use the selected element
-            if ( typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 el = this.getSelected();
             }
             
