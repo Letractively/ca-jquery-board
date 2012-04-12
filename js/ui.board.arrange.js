@@ -121,7 +121,7 @@
                 var key_a = parseInt( $( a ).css( direction ) );
                 var key_b = parseInt( $( b ).css( direction ) );
                 
-                return ( key_a < key_b ) ? 1 : 0;
+                return ( key_a < key_b ) ? 1 : -1;
             }).appendTo( elements_list );
         },
         
