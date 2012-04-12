@@ -354,7 +354,6 @@
                     
                 // copy the clipboard
                 this._clipbaord.each( function () {
-                    console.log($(this).data());
                     var x = parseInt( $(this).data( "x" ) );
                     var y = parseInt( $(this).data( "y" ) );
                     var new_element = board.addElement();
