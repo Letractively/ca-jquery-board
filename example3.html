@@ -89,11 +89,6 @@
                     // do not continue to the default handeler
                     return true;
                 case "cloud":
-                    // if this is not a number do not change the view
-                    if ( !$.isNumeric( d.value ) ) {
-                        return true;
-                    }
-                    
                     var url = "example-img/objects/cloud-1.png";
                     var url_sunny = "example-img/objects/cloud-2.png";
                     
@@ -102,8 +97,8 @@
                     d.ui.siblings( "[data-type=cloud]" )
                         .children( "img.background" ).attr( "src", url );
                     
-                    // set this cloud to be sunny no mutter whats its value
-                    d.ui.children( "img.background" ).attr( "src", url_sunny);
+                    // set this cloud to be sunny no mutter whats its value is
+                    d.ui.children( "img.background" ).attr( "src", url_sunny );
                     
                     // do not continue to the default handeler
                     return true;
