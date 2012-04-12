@@ -97,7 +97,7 @@
                 
                 switch ( key ) {
                     case "edit":
-                        var elements = this._getElements();
+                        var elements = this.getElements();
                         
                         this.options[ key ] = value;
                         
@@ -156,7 +156,7 @@
                         break;
                     case "grid-snap":
                         var grid = this.options[ "grid" ];
-                        var elements = this._getElements();
+                        var elements = this.getElements();
                         
                         this.options[ key ] = value;
                         
@@ -218,13 +218,13 @@
             return el.hasClass( "ui-board-element" );
         },
         
-        _getElements: function() {
+        getElements: function() {
             return this.element
                 .children( "ul.ui-board-elements-list" )
                 .children( "li.ui-board-element" );
         },
         
-        _getSelected: function() {
+        getSelected: function() {
             return this.element
                 .children( "ul.ui-board-elements-list" )
                 .children( "li.ui-board-element.ui-selected" );
@@ -239,7 +239,7 @@
             json += ',"border":"' + this.options[ "border" ] + '"';
             
             // stringify all the elments
-            this._getElements().each( function () {
+            this.getElements().each( function () {
                 json += ',"element' + $( this ).index() + '":' + $( this ).board_element( "stringify" );
             });
             
@@ -287,7 +287,7 @@
         copy: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             // clone current elements to clipboard
@@ -303,7 +303,7 @@
         pasteSize: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             // paste size from clipboard to elment
@@ -319,7 +319,7 @@
         pasteStyle: function( el, source ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             // if no source, use clipboard
@@ -356,6 +356,8 @@
                 this._clipbaord.each( function () {
                     var x = parseInt( $(this).data( "x" ) );
                     var y = parseInt( $(this).data( "y" ) );
+                    var w = parseInt( $(this).data( "w" ) );
+                    var h = parseInt( $(this).data( "h" ) );
                     var new_element = board.addElement();
                     
                     // make current element a selected one
@@ -364,10 +366,8 @@
                     // set initial position and sise
                     new_element.board_element( "setData", "x", x - offset_x);
                     new_element.board_element( "setData", "y", y - offset_y);
-                    new_element.board_element( "setData", "w", 
-                        $(this).data( "w" ) );
-                    new_element.board_element( "setData", "h", 
-                        $(this).data( "h" ) );
+                    new_element.board_element( "setData", "w", w );
+                    new_element.board_element( "setData", "h", h );
                     
                     // copy data
                     board.pasteStyle(new_element, $(this));
@@ -393,7 +393,7 @@
         delElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -405,7 +405,7 @@
         
         delAll: function() {
             // remove the old elements list
-            this.element.find( "ul" ).remove();
+            this.element.find( "ul.ui-board-elements-list" ).remove();
             
             // create a new empty elements list
             this.element.append( '<ul class="ui-board-elements-list"></ul>' );
@@ -413,18 +413,18 @@
         
         // selections
         selectAll: function() {
-            $( ".ui-board-element" ).addClass( "ui-selected" );
+            this.getElements().addClass( "ui-selected" );
         },
         
         unSelectAll: function () {
-            $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
+            this.getSelected().removeClass( "ui-selected" );
         },
         
         // order elment functions
         topElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -438,7 +438,7 @@
         bottomElement: function (el) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -452,7 +452,7 @@
         upElement: function (el) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             if ( !this._isElement( el ) ) {
@@ -469,7 +469,7 @@
         downElement: function( el ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
-                el = this._getSelected();
+                el = this.getSelected();
             }
             
             if ( !this._isElement( el ) ) {
