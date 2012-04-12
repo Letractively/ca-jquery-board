@@ -37,6 +37,19 @@
                     
                     // do not continue to the default handeler
                     return true;
+                case "cloud":
+                    var url = "example-img/objects/cloud-1.png";
+                    
+                    // remove the default value label
+                    d.ui.find( "p.value" ).remove();
+                    
+                    // insert the flower image
+                    d.ui.board_element( "setData", "color", "transparent" );
+                    d.ui.children( "img.background" ).remove();
+                    d.ui.append( '<img class="background" src="' + url + '"/>' );
+                    
+                    // do not continue to the default handeler
+                    return true;
                 case "tree":
                     var url = "example-img/objects/tree.png";
                     
@@ -71,6 +84,18 @@
                     
                     var value = parseInt( d.value );
                     var url = "example-img/objects/flower-" + (value % 4 + 1) + ".png";
+                    d.ui.children( "img.background" ).attr( "src", url);
+                    
+                    // do not continue to the default handeler
+                    return true;
+                case "cloud":
+                    // if this is not a number do not change the view
+                    if ( !$.isNumeric( d.value ) ) {
+                        return true;
+                    }
+                    
+                    var value = parseInt( d.value );
+                    var url = "example-img/objects/cloud-" + (value % 2 + 1) + ".png";
                     d.ui.children( "img.background" ).attr( "src", url);
                     
                     // do not continue to the default handeler
@@ -112,12 +137,18 @@
             $( "#board" ).board( "delElement" );
         '  src="example-img/buttons/edit_delete.png" />
         <input type="image" title="new flower" onClick='
+            // add existing element with type
             var el = $( "<li data-type=\"flower\"></li>" );
             $( "#board" ).board( "addElement", el );
         '  src="example-img/objects/flower-1.png" width="60" height="60" />
+        <input type="image" title="new cloud" onClick='
+            // add an element, and then set its type
+            var el = $( "#board" ).board( "addElement" );
+            el.board_element( "setData", "type", "cloud" );
+        '  src="example-img/objects/cloud-1.png" width="60" height="60" />
         <input type="image" title="new tree" onClick='
-            var el = $( "<li data-type=\"tree\"></li>" );
-            $( "#board" ).board( "addElement", el );
+            // update the board with a new element
+            $( "#board" ).board( "update", {element: {type: "tree"}} );
         '  src="example-img/objects/tree.png" width="60" height="60" />
         
         <!-- canvas toolbar -->
