@@ -233,6 +233,82 @@
                 var w = $( this ).width();
                 $( this ).animate( {left: ( left + width - w / 2 )}, duration );
             });
+        },
+        
+        distributeHorizontalLeft: function( el ) {
+            // try to get the elements to arange
+            el = this._getElementsToArange( el );
+            
+            if ( !this._isElement( el ) ) {
+                return;
+            }
+            
+            // sort elemants by their left
+            this._sortElements( el, "left" );
+            
+            var left_el = this._getLeftElement( el );
+            var right_el = this._getRightElement( el );
+            
+            var left = parseInt( $( left_el ).css( "left" ) );
+            var right = parseInt( $( right_el ).css( "left" ) );
+            var duration = this.options.animate;
+            
+            var n = el.length;
+            var x = right;
+            var step = (right - left) / (n - 1);
+            
+            el.each( function () {
+                $( this ).animate( {left: x}, duration );
+                x -= step;
+            });
+        },
+        
+        distributeVerticalTop: function( el ) {
+            // try to get the elements to arange
+            el = this._getElementsToArange( el );
+            
+            if ( !this._isElement( el ) ) {
+                return;
+            }
+            
+            // sort elemants by their top
+            this._sortElements( el, "top" );
+            
+            var top_el = this._getTopElement( el );
+            var bottom_el = this._getBottomElement( el );
+            
+            var top = parseInt( $( top_el ).css( "top" ) );
+            var bottom = parseInt( $( bottom_el ).css( "top" ) );
+            var duration = this.options.animate;
+            
+            var n = el.length;
+            var y = bottom;
+            var step = (bottom - top) / (n - 1);
+            
+            el.each( function () {
+                $( this ).animate( {top: y}, duration );
+                y -= step;
+            });
+        },
+        
+        distributeGrid: function( el ) {
+            // try to get the elements to arange
+            el = this._getElementsToArange( el );
+            
+            if ( !this._isElement( el ) ) {
+                return;
+            }
+            
+            var duration = this.options.animate;
+            var step_x = this.options.grid[0];
+            var step_y = this.options.grid[1];
+            
+            el.each( function () {
+                var x = parseInt( $( this ).position().left / step_x + 0.5 ) * step_x;
+                var y = parseInt( $( this ).position().top / step_y + 0.5 ) * step_y;
+                
+                $( this ).animate( {top: y, left: x}, duration );
+            });
         }
         
     });
