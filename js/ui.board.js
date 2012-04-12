@@ -82,15 +82,40 @@
                 // set the element
                 var el = this.addElement();
                 el.board_element( "update", value );
-            } else if ( key.slice( 0, 5 ) === "value" ) {
+            } else if ( key.slice( 0, 3 ) === "val" ) {
                 // this is an element value option
                 // this options effect the board-elements
                 
-                // set the element value
-                if ( typeof value.state !== "string" ) {
-                    value.state = "normal";
+                var el = false;
+                
+                // get the elemants to set
+                if ( typeof value.select === "string" ) {
+                    // select: the string value is the selector
+                    el = this.getElements( value.select )
+                } else if ( typeof value.id === "string" ) {
+                    // id: the string value is the element id
+                    el = this.getElements( "#" + value.id )
+                } else if ( typeof value.cl === "string" ) {
+                    // cl: the string value is the element class
+                    el = this.getElements( "." + value.cl )
+                } else if ( typeof value.key === "string" ) {
+                    // key: the string value is a data key,value pair
+                    var pair = value.key.match(/^(.+)=(.+)$/);
+                    if ( pair) {
+                        el = this.getElements( "[data-" + pair[1] + "=" + pair[2] + "]" );
+                    }
                 }
-                $("#" + value.id).board_element( "setValue", value.value, value.state );
+                
+                // if we found an elemant to set, then set it's value
+                if ( typeof el === "object" ) {
+                    // if no state, asume normal
+                    if ( typeof value.state !== "string" ) {
+                        value.state = "normal";
+                    }
+                    
+                    // set the elemets value
+                    el.board_element( "setValue", value.value, value.state );
+                }
             } else {
                 // regular options
                 // this options effect the board
@@ -211,23 +236,25 @@
         
         _isElement: function( el ) {
             // if this is not an object, it is not an element
-            if (typeof el !== "object") {
+            if ( typeof el !== "object" ) {
                 return false;
             }
             
             return el.hasClass( "ui-board-element" );
         },
         
-        getElements: function() {
+        getElements: function( selector ) {
+            if ( typeof selector !== "string" ) {
+                selector = "";
+            }
+            
             return this.element
                 .children( "ul.ui-board-elements-list" )
-                .children( "li.ui-board-element" );
+                .children( "li.ui-board-element" + selector);
         },
         
         getSelected: function() {
-            return this.element
-                .children( "ul.ui-board-elements-list" )
-                .children( "li.ui-board-element.ui-selected" );
+            return this.getElements( ".ui-selected" );
         },
         
         stringify: function() {
