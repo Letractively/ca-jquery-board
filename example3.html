@@ -94,9 +94,16 @@
                         return true;
                     }
                     
-                    var value = parseInt( d.value );
-                    var url = "example-img/objects/cloud-" + (value % 2 + 1) + ".png";
-                    d.ui.children( "img.background" ).attr( "src", url);
+                    var url = "example-img/objects/cloud-1.png";
+                    var url_sunny = "example-img/objects/cloud-2.png";
+                    
+                    // we can only have one sun, set all other clouds to be
+                    // witout sun
+                    d.ui.siblings( "[data-type=cloud]" )
+                        .children( "img.background" ).attr( "src", url );
+                    
+                    // set this cloud to be sunny no mutter whats its value
+                    d.ui.children( "img.background" ).attr( "src", url_sunny);
                     
                     // do not continue to the default handeler
                     return true;
