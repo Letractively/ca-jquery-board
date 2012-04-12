@@ -125,6 +125,9 @@
             // set data in dataset
             this.element.data( key, value);
             
+            // keep the elements dataset uptodate
+            this.element.attr( "data-" + key, value);
+            
             // call triger for setting data
             // if the triger return true stop here
             //  used to set up custom options
