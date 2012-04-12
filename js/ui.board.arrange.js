@@ -291,7 +291,7 @@
             });
         },
         
-        distributeGrid: function( el ) {
+        alignGrid: function( el ) {
             // try to get the elements to arange
             el = this._getElementsToArange( el );
             
