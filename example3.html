@@ -76,9 +76,6 @@
                     // do not continue to the default handeler
                     return true;
                 case "tree":
-                    var url = "example-img/objects/tree.png";
-                    d.ui.children( "img.background" ).attr( "src", url);
-                    
                     // do not continue to the default handeler
                     return true;
             }
@@ -117,12 +114,10 @@
         <input type="image" title="new flower" onClick='
             var el = $( "<li data-type=\"flower\"></li>" );
             $( "#board" ).board( "addElement", el );
-            el.board_element("SetValue", 3);
         '  src="example-img/objects/flower-1.png" width="60" height="60" />
         <input type="image" title="new tree" onClick='
             var el = $( "<li data-type=\"tree\"></li>" );
             $( "#board" ).board( "addElement", el );
-            el.board_element("SetValue", 3);
         '  src="example-img/objects/tree.png" width="60" height="60" />
         
         <!-- canvas toolbar -->
