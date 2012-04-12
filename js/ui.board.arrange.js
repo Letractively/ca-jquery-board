@@ -112,7 +112,7 @@
         },
         
         _sortElements: function ( el, direction ) {
-            var elements_list = this.element.children( "ul.ui-board-elements-list");
+            var elements_list = this.element.children( "ul.ui-board-elements-list" );
             
             el.sort( function( a, b ){
                 // direction can be:
@@ -308,6 +308,28 @@
                 var y = parseInt( $( this ).position().top / step_y + 0.5 ) * step_y;
                 
                 $( this ).animate( {top: y, left: x}, duration );
+            });
+        },
+        
+        alignGridFull: function( el ) {
+            // try to get the elements to arange
+            el = this._getElementsToArange( el );
+            
+            if ( !this._isElement( el ) ) {
+                return;
+            }
+            
+            var duration = this.options.animate;
+            var step_x = this.options.grid[0];
+            var step_y = this.options.grid[1];
+            
+            el.each( function () {
+                var x = parseInt( $( this ).position().left / step_x + 0.5 ) * step_x;
+                var y = parseInt( $( this ).position().top / step_y + 0.5 ) * step_y;
+                var w = parseInt( $( this ).width() / step_x + 0.5 ) * step_x;
+                var h = parseInt( $( this ).height() / step_y + 0.5 ) * step_y;
+                
+                $( this ).animate( {top: y, left: x, width: w, height: h}, duration );
             });
         }
         
