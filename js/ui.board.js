@@ -97,13 +97,16 @@
                 
                 switch ( key ) {
                     case "edit":
+                        var elements = this._getElements();
+                        
                         this.options[ key ] = value;
+                        
                         if ( value ) {
-                            this.element.find( "li.ui-board-element" ).resizable( "enable" );
-                            this.element.find( "li.ui-board-element" ).draggable( "enable" );
+                            elements.resizable( "enable" );
+                            elements.draggable( "enable" );
                         } else {
-                            this.element.find( "li.ui-board-element" ).resizable( "disable" );
-                            this.element.find( "li.ui-board-element" ).draggable( "disable" );
+                            elements.resizable( "disable" );
+                            elements.draggable( "disable" );
                         }
                         break;
                     case "image":
@@ -113,7 +116,6 @@
                         if (value) {
                             this.element.append( '<img class="background" src="' + value + '"/>' );
                         }
-                        
                         break;
                     case "color":
                         this.options[ key ] = value;
@@ -154,15 +156,16 @@
                         break;
                     case "grid-snap":
                         var grid = this.options[ "grid" ];
+                        var elements = this._getElements();
                         
                         this.options[ key ] = value;
                         
                         if ( value ) {
-                            $( "li.ui-board-element" ).resizable( "option", "grid", grid );
-                            $( "li.ui-board-element" ).draggable( "option", "grid", grid );
+                            elements.resizable( "option", "grid", grid );
+                            elements.draggable( "option", "grid", grid );
                         } else {
-                            $( "li.ui-board-element" ).resizable( "option", "grid", false );
-                            $( "li.ui-board-element" ).draggable( "option", "grid", false );
+                            elements.resizable( "option", "grid", false );
+                            elements.draggable( "option", "grid", false );
                         }
                         break;
                     case "grid-show":
@@ -190,7 +193,7 @@
                 var h = this.element.height();
                 
                 // get the elemants list
-                var element_list = this.element.find( "ul.ui-board-elements-list" );
+                var element_list = this.element.children( "ul.ui-board-elements-list" );
                 
                 // create the grid main div and insert it before the elemants list
                 var element_grid = $( '<div class="grid-box"></div>' );
@@ -215,8 +218,16 @@
             return el.hasClass( "ui-board-element" );
         },
         
+        _getElements: function() {
+            return this.element
+                .children( "ul.ui-board-elements-list" )
+                .children( "li.ui-board-element" );
+        },
+        
         _getSelected: function() {
-            return this.element.find( "li.ui-board-element.ui-selected" );
+            return this.element
+                .children( "ul.ui-board-elements-list" )
+                .children( "li.ui-board-element.ui-selected" );
         },
         
         stringify: function() {
@@ -228,7 +239,7 @@
             json += ',"border":"' + this.options[ "border" ] + '"';
             
             // stringify all the elments
-            $( "li.ui-board-element" ).each( function () {
+            this._getElements().each( function () {
                 json += ',"element' + $( this ).index() + '":' + $( this ).board_element( "stringify" );
             });
             
@@ -281,6 +292,10 @@
             
             // clone current elements to clipboard
             if ( this._isElement( el ) ) {
+                // make sure the x,y,w,h of the elements are up to date
+                el.board_element( "updateData" );
+                
+                // copy to clipboard with data
                 this._clipbaord = el.clone(true);
             }
         },
@@ -293,21 +308,28 @@
             
             // paste size from clipboard to elment
             if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
-                $.each(["w","h"], function( i, key) {
-                    el.board_element( "setData", key, this._clipbaord.board_element( "getData", key ) );
-                });
+                var w = parseInt( this._clipbaord.data( "w" ) );
+                var h = parseInt( this._clipbaord.data( "h" ) );
+                
+                el.board_element( "setData", "w", w );
+                el.board_element( "setData", "h", h );
             }
         },
         
-        pasteStyle: function( el ) {
+        pasteStyle: function( el, source ) {
             // if no element, use the selected element
             if ( typeof el !== "object") {
                 el = this._getSelected();
             }
             
-            // paste size from clipboard to elment
+            // if no source, use clipboard
+            if ( typeof source !== "object") {
+                source = this._clipbaord;
+            }
+            
+            // paste style from clipboard to elment
             if ( this._isElement( el ) && this._isElement( this._clipbaord ) ) {
-                $.each( this._clipbaord.board_element( "getData" ), function ( k, v ) {
+                $.each( source.board_element( "getData" ), function ( k, v ) {
                     // add all data except the administrative data
                     // id and position
                     //  e.g. id, index, prev ...
@@ -323,23 +345,34 @@
         paste: function() {
             // if we have data in the clipboard
             if ( this._isElement( this._clipbaord ) ) {
-                // copy the clipboard
-                var new_element = this.addElement();
+                var board = this;
+                var offset_x = parseInt( this._clipbaord.data( "x" ) ) - 50;
+                var offset_y = parseInt( this._clipbaord.data( "y" ) ) - 50;
                 
-                // make current element the selected one
+                // remove all selections
                 $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
-                new_element.addClass( "ui-selected" );
-                
-                // set initial position and sise
-                new_element.board_element( "setData", "x", 10);
-                new_element.board_element( "setData", "y", 10);
-                new_element.board_element( "setData", "w", 
-                    this._clipbaord.board_element( "getData", "w" ));
-                new_element.board_element( "setData", "h", 
-                    this._clipbaord.board_element( "getData", "h" ));
-                
-                // copy data
-                this.pasteStyle(new_element);
+                    
+                // copy the clipboard
+                this._clipbaord.each( function () {
+                    console.log($(this).data());
+                    var x = parseInt( $(this).data( "x" ) );
+                    var y = parseInt( $(this).data( "y" ) );
+                    var new_element = board.addElement();
+                    
+                    // make current element a selected one
+                    new_element.addClass( "ui-selected" );
+                    
+                    // set initial position and sise
+                    new_element.board_element( "setData", "x", x - offset_x);
+                    new_element.board_element( "setData", "y", y - offset_y);
+                    new_element.board_element( "setData", "w", 
+                        $(this).data( "w" ) );
+                    new_element.board_element( "setData", "h", 
+                        $(this).data( "h" ) );
+                    
+                    // copy data
+                    board.pasteStyle(new_element, $(this));
+                });
             }
         },
         

@@ -235,6 +235,10 @@
             this.element.find( "p.value" ).text( this.options.value );
         },
         
+        updateData: function () {
+            this._updateDate();
+        },
+        
         _updateDate: function() {
             // update element id
             if ( typeof this.element.attr( "id" ) === "string" ) {

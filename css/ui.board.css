@@ -16,8 +16,11 @@
   overflow: hidden;
 }
 
-.ui-board li {
-   list-style: none;
+.ui-board ul.ui-board-elements-list {
+   height: 0;
+   width: 0;
+   padding: 0;
+   margin: 0;
 }
 
 div.grid-box {
@@ -53,18 +56,19 @@ div.grid-box {
     height: 100%;
 }
 
-.ui-board-element.ui-resizable {
-  border: 1px gray dashed;
-  background-color: lightblue;
-  z-index: 1000;
+li.ui-board-element.ui-resizable {
+    list-style: none;
+    border: 1px gray dashed;
+    background-color: lightblue;
+    z-index: 1000;
 }
 
-.ui-board-element.ui-resizable-disabled {
+li.ui-board-element.ui-resizable-disabled {
   opacity: 1;
   border-color: transparent;
 }
 
-.ui-board-element {
+li.ui-board-element {
   position: absolute;
   width: 150px; 
   height: 150px; 
