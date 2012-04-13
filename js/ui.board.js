@@ -259,12 +259,15 @@
         },
         
         stringify: function() {
+            var image = this.options[ "image" ];
             var json = '{';
             
             // default options
-            json += '"image":"' + this.options[ "image" ] + '"';
             json += ',"color":"' + this.options[ "color" ] + '"';
             json += ',"border":"' + this.options[ "border" ] + '"';
+            if ( image ) {
+                json += ',"image":"' + this.options[ "image" ] + '"';
+            }
             
             // stringify all the elments
             this.getElements().each( function () {
