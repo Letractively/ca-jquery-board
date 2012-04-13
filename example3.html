@@ -25,7 +25,12 @@
                 return false;
             }
             
-            // use the element type to chose the right view
+            // use the element type to chose how elements are created
+            // in edit mode elemants can change type -
+            //  when elemant get a new type we must destroy it's old view
+            //  and create the new view
+            //
+            //  default handler creates a <p> elemant
             switch ( d.value ) {
                 case "flower":
                     var url = "example-img/objects/flower-1.png";
@@ -72,7 +77,12 @@
             return false;
         });
         
-        // create custom view
+        // use the element type to chose how element valeue change it's view
+        // in view mode elemant can change it's value -
+        //  when elemant get a new value we can set it's display to show the 
+        //  new value
+        //
+        //  default handler changes the text in the <p> elemant
         $( "#board" ).on( "setValue", function ( e, d ) {
             // get the element type
             var ui_type = d.ui.board_element( "getData", "type" );
@@ -114,13 +124,17 @@
             return false;
         });
         
-        // change element value when clicking on it
-        $( "#board" ).on( "dblclick", "li", function ( e, d ) {
+        // when customizing elemants we can also create new interaction
+        // handelers. in this example we will increase the elemants value 
+        // when we click on it
+        $( "#board" ).on( "click", "li", function ( e, d ) {
             // get the element curret value
-            var value = parseInt($(this).board_element( "option", "value" ));
+            var value = parseInt( $( this ).board_element( "option", "value" ));
             
             // increase value by one
             value += 1;
+            
+            // set the new value to the board
             $(this).board_element( "setValue", value );
         });
     });
@@ -182,7 +196,33 @@
             console.log( $( "#board" ).board( "stringify" ) );
         '  src="example-img/buttons/file_export.png" />
     </div>
-    <p style="font-size:12px;color:blue;">( Double click on a flower to change it's color )</p>
+    
+    <div>
+        <!-- arrange toolbar -->
+        <input type="image" title="align horizontal center" onClick='
+            $( "#board" ).board( "alignHorizontalCenter" );
+        '  src="example-img/buttons/align-horizontal-center.png" />
+        <input type="image" title="align horizontal left" onClick='
+            $( "#board" ).board( "alignHorizontalLeft" );
+        '  src="example-img/buttons/align-horizontal-left.png" />
+        <input type="image" title="align horizontal right" onClick='
+            $( "#board" ).board( "alignHorizontalRight" );
+        '  src="example-img/buttons/align-horizontal-right.png" />
+        
+        <input type="image" title="align vertical center" onClick='
+            $( "#board" ).board( "alignVerticalCenter" );
+        '  src="example-img/buttons/align-vertical-center.png" />
+        <input type="image" title="align vertical top" onClick='
+            $( "#board" ).board( "alignVerticalTop" );
+        '  src="example-img/buttons/align-vertical-top.png" />
+        <input type="image" title="align vertical bottom" onClick='
+            $( "#board" ).board( "alignVerticalBottom" );
+        '  src="example-img/buttons/align-vertical-bottom.png" />
+        
+        <input type="image" title="align to grid" onClick='
+            $( "#board" ).board( "alignGridFull" );
+        '  src="example-img/buttons/edit_new.png" />
+    </div>
     <div id="board"></div>
 </body>
 </html>
