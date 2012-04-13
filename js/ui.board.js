@@ -266,7 +266,7 @@
             json += ',"color":"' + this.options[ "color" ] + '"';
             json += ',"border":"' + this.options[ "border" ] + '"';
             if ( image ) {
-                json += ',"image":"' + this.options[ "image" ] + '"';
+                json += ',"image":"' + image + '"';
             }
             
             // stringify all the elments
