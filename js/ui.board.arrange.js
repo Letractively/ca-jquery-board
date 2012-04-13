@@ -304,8 +304,8 @@
             var step_y = this.options.grid[1];
             
             el.each( function () {
-                var x = parseInt( $( this ).position().left / step_x + 0.5 ) * step_x;
-                var y = parseInt( $( this ).position().top / step_y + 0.5 ) * step_y;
+                var x = Math.round( $( this ).position().left / step_x ) * step_x;
+                var y = Math.round( $( this ).position().top / step_y ) * step_y;
                 
                 $( this ).animate( {top: y, left: x}, duration );
             });
@@ -324,10 +324,10 @@
             var step_y = this.options.grid[1];
             
             el.each( function () {
-                var x = parseInt( $( this ).position().left / step_x + 0.5 ) * step_x;
-                var y = parseInt( $( this ).position().top / step_y + 0.5 ) * step_y;
-                var w = parseInt( $( this ).width() / step_x + 0.5 ) * step_x;
-                var h = parseInt( $( this ).height() / step_y + 0.5 ) * step_y;
+                var x = Math.round( $( this ).position().left / step_x ) * step_x;
+                var y = Math.round( $( this ).position().top / step_y ) * step_y;
+                var w = Math.round( $( this ).width() / step_x ) * step_x;
+                var h = Math.round( $( this ).height() / step_y ) * step_y;
                 
                 $( this ).animate( {top: y, left: x, width: w, height: h}, duration );
             });

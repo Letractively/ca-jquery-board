@@ -57,6 +57,13 @@
                     var div_top = ui.position.top - ui.originalPosition.top;
                     var div_left = ui.position.left - ui.originalPosition.left;
                     
+                    // if we are in snap mode, adjast offset
+                    var grid = $(this).draggable("option","grid");
+                    if ( grid ) {
+                        div_top = Math.round( div_top / grid[1] ) * grid[1];
+                        div_left = Math.round( div_left / grid[0] ) * grid[0];
+                    }
+                    
                     // also drag all other selected elements
                     $( ".ui-board-element.ui-selected" ).not( ev.target ).each( function () {
                         $( this ).animate({
@@ -236,7 +243,7 @@
             
             // write text on object
             if ( this.element.children( "p.value" ).length === 0 ) {
-                this.element.append( '<p class="value"></p>' )
+                this.element.append( '<p class="value"></p>' );
             }
             
             this.element.children( "p.value" ).text( this.options.value );
@@ -292,9 +299,6 @@
             $.each(data, function ( k, v ) {
                 el.setData( k, v );
             });
-            
-            // set the value
-            this.setValue();
         }
     });
 })(jQuery);
