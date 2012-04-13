@@ -267,6 +267,8 @@
             json += ',"border":"' + this.options[ "border" ] + '"';
             if ( image ) {
                 json += ',"image":"' + image + '"';
+            } else {
+                json += ',"image":false';
             }
             
             // stringify all the elments
