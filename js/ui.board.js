@@ -324,7 +324,7 @@
             }
             
             // append the new element to the list
-            this.element.find( "ul" ).append( el );
+            this.element.children( "ul.ui-board-elements-list" ).append( el );
             el.board_element();
             
             // return the new element
@@ -346,7 +346,7 @@
         
         delAll: function() {
             // remove the old elements list
-            this.element.find( "ul.ui-board-elements-list" ).remove();
+            this.element.children( "ul.ui-board-elements-list" ).remove();
             
             // create a new empty elements list
             this.element.append( '<ul class="ui-board-elements-list"></ul>' );
