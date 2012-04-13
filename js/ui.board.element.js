@@ -235,11 +235,11 @@
             }
             
             // write text on object
-            if ( this.element.find( "p" ).length === 0 ) {
+            if ( this.element.children( "p.value" ).length === 0 ) {
                 this.element.append( '<p class="value"></p>' )
             }
             
-            this.element.find( "p.value" ).text( this.options.value );
+            this.element.children( "p.value" ).text( this.options.value );
         },
         
         updateData: function() {
