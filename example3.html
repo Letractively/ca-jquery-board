@@ -143,10 +143,16 @@
         $( "#board" ).board( "load", '{"image":false,"color":"white","border":"gray","element0":{"index":"0","id":"el0","x":"254px","y":"127px","w":"150px","h":"150px","type":"tree","color":"transparent"},"element1":{"index":"1","id":"el1","x":"381px","y":"65px","w":"150px","h":"150px","type":"cloud","color":"transparent"},"element2":{"index":"2","type":"flower","color":"transparent","id":"el2","x":"254px","y":"294px","w":"71px","h":"67px"},"element3":{"index":"3","id":"el3","x":"475px","y":"267px","w":"71px","h":"67px","type":"flower","color":"transparent"},"element4":{"index":"4","id":"el4","x":"177px","y":"214px","w":"71px","h":"67px","type":"flower","color":"transparent"},"element5":{"index":"5","id":"el5","x":"308px","y":"247px","w":"71px","h":"67px","type":"flower","color":"transparent"}}' );
         
         // set random values to the flowers
+        randomColors();
+    });
+    
+    // global function to set random values to the flowers
+    function randomColors() {
         $( "#board li[data-type=flower]" ).each( function() {
             $( this ).board_element( "setValue", Math.random() * 10 );
         });
-    });
+    }
+    
     </script>
     <title>jQuery ui board</title>
 </head>
@@ -238,6 +244,11 @@
         <input type="image" title="distribute vertical top" onClick='
             $( "#board" ).board( "distributeVerticalTop" );
         '  src="example-img/buttons/distribute-vertical-top.png" />
+        
+        <!-- randomize colors -->
+        <input type="image" title="randomize colors" onClick='
+           randomColors();
+        '  src="example-img/objects/flower-3.png" width="60" height="60" />
     </div>
     <div id="board"></div>
 </body>
