@@ -102,7 +102,15 @@
                 }
                 $( this ).addClass( "ui-selected" );
             });
+            
+            // if board is in snap mode, make it's new objects snap
+            if (board.board( "option", "grid-snap" )) {
+                var grid = board.board( "option", "grid" );
                 
+                this.element.resizable( "option", "grid", grid );
+                this.element.draggable( "option", "grid", grid );
+            }
+            
             // if we are not in edit mode disable the dragging and resizing
             //  options
             if (!board.board( "option", "edit" )) {
