@@ -43,7 +43,7 @@
             
             el.each( function () {
                 if ( !foundElement || 
-                    parseInt( foundElement.css( "left" ) ) > parseInt( $( this ).css( "left" ) )) {
+                    parseInt( foundElement.css( "left" ), 10 ) > parseInt( $( this ).css( "left" ), 10 )) {
                     foundElement = $( this );
                 }
             });
@@ -63,7 +63,7 @@
             
             el.each( function () {
                 if ( !foundElement || 
-                    parseInt( foundElement.css( "left" ) ) < parseInt( $( this ).css( "left" ) )) {
+                    parseInt( foundElement.css( "left" ), 10 ) < parseInt( $( this ).css( "left" ), 10 )) {
                     foundElement = $( this );
                 }
             });
@@ -83,7 +83,7 @@
             
             el.each( function () {
                 if ( !foundElement || 
-                    parseInt( foundElement.css( "top" ) ) > parseInt( $( this ).css( "top" ) )) {
+                    parseInt( foundElement.css( "top" ), 10 ) > parseInt( $( this ).css( "top" ), 10 )) {
                     foundElement = $( this );
                 }
             });
@@ -103,7 +103,7 @@
             
             el.each( function () {
                 if ( !foundElement || 
-                    parseInt( foundElement.css( "top" ) ) < parseInt( $( this ).css( "top" ) )) {
+                    parseInt( foundElement.css( "top" ), 10 ) < parseInt( $( this ).css( "top" ), 10 )) {
                     foundElement = $( this );
                 }
             });
@@ -118,8 +118,8 @@
                 // direction can be:
                 //  top - for sorting from up to down
                 //  left - for sorting from left to right
-                var key_a = parseInt( $( a ).css( direction ) );
-                var key_b = parseInt( $( b ).css( direction ) );
+                var key_a = parseInt( $( a ).css( direction ), 10 );
+                var key_b = parseInt( $( b ).css( direction ), 10 );
                 
                 return ( key_a < key_b ) ? 1 : -1;
             }).appendTo( elements_list );
@@ -134,7 +134,7 @@
             }
             
             var top_el = this._getTopElement( el );
-            var top = parseInt( $( top_el ).css( "top" ) );
+            var top = parseInt( $( top_el ).css( "top" ), 10 );
             var duration = this.options.animate;
             
             el.each( function () {
@@ -151,7 +151,7 @@
             }
             
             var bottom_el = this._getBottomElement( el );
-            var top = parseInt( $( bottom_el ).css( "top" ) );
+            var top = parseInt( $( bottom_el ).css( "top" ), 10 );
             var height = $( bottom_el ).height();
             var duration = this.options.animate;
             
@@ -170,7 +170,7 @@
             }
             
             var bottom_el = this._getBottomElement( el );
-            var top = parseInt( $( bottom_el ).css( "top" ) );
+            var top = parseInt( $( bottom_el ).css( "top" ), 10 );
             var height = $( bottom_el ).height();
             var duration = this.options.animate;
             
@@ -189,7 +189,7 @@
             }
             
             var left_el = this._getLeftElement( el );
-            var left = parseInt( $( left_el ).css( "left" ) );
+            var left = parseInt( $( left_el ).css( "left" ), 10 );
             var duration = this.options.animate;
             
             el.each( function () {
@@ -206,7 +206,7 @@
             }
             
             var right_el = this._getRightElement( el );
-            var left = parseInt( $( right_el ).css( "left" ) );
+            var left = parseInt( $( right_el ).css( "left" ), 10 );
             var width = $( right_el ).width();
             var duration = this.options.animate;
             
@@ -225,7 +225,7 @@
             }
             
             var left_el = this._getLeftElement( el );
-            var left = parseInt( $( left_el ).css( "left" ) );
+            var left = parseInt( $( left_el ).css( "left" ), 10 );
             var width = $( left_el ).width();
             var duration = this.options.animate;
             
@@ -249,8 +249,8 @@
             var left_el = this._getLeftElement( el );
             var right_el = this._getRightElement( el );
             
-            var left = parseInt( $( left_el ).css( "left" ) );
-            var right = parseInt( $( right_el ).css( "left" ) );
+            var left = parseInt( $( left_el ).css( "left" ), 10 );
+            var right = parseInt( $( right_el ).css( "left" ), 10 );
             var duration = this.options.animate;
             
             var n = el.length;
@@ -277,8 +277,8 @@
             var top_el = this._getTopElement( el );
             var bottom_el = this._getBottomElement( el );
             
-            var top = parseInt( $( top_el ).css( "top" ) );
-            var bottom = parseInt( $( bottom_el ).css( "top" ) );
+            var top = parseInt( $( top_el ).css( "top" ), 10 );
+            var bottom = parseInt( $( bottom_el ).css( "top" ), 10 );
             var duration = this.options.animate;
             
             var n = el.length;

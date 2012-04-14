@@ -133,6 +133,13 @@
         // react to option changes after initialization
         _setOption: function( key, value ) {
             switch ( key ) {
+                case "value":
+                    this.options.value = value;
+                    this.setValue( value ,"normal" );
+                    break;
+                case "animate":
+                    this.options.animate = parseInt( value, 10 );
+                    break;
                 default:
                     this.options[ key ] = value;
                     break;
@@ -239,7 +246,7 @@
                 this.options.state = state;
             }
             if ( typeof value === "number" ) {
-                this.options.value = value;
+             this.options.value = value;
             }
             
             // call triger for setting the elment value value
@@ -278,7 +285,7 @@
         
         stringify: function() {
             // update none data-set data
-            this.updateData()
+            this.updateData();
             
             // create the JSON string
             var json = '{"index":"' + this.element.index() +'"';

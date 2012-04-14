@@ -73,6 +73,7 @@
 
         // react to option changes after initialization
         _setOption: function( key, value ) {
+            var el;
             
             // highjack the options that start with "element..." and "value..."
             //  use this options to manipulate the board elements
@@ -81,24 +82,24 @@
                 // this options effect the board-elements
                 
                 // set the element
-                var el = this.addElement();
+                el = this.addElement();
                 el.board_element( "update", value );
             } else if ( key.slice( 0, 3 ) === "val" ) {
                 // this is an element value option
                 // this options effect the board-elements
                 
-                var el = false;
+                el = false;
                 
                 // get the elemants to set
                 if ( typeof value.select === "string" ) {
                     // select: the string value is the selector
-                    el = this.getElements( value.select )
+                    el = this.getElements( value.select );
                 } else if ( typeof value.id === "string" ) {
                     // id: the string value is the element id
-                    el = this.getElements( "#" + value.id )
+                    el = this.getElements( "#" + value.id );
                 } else if ( typeof value.cl === "string" ) {
                     // cl: the string value is the element class
-                    el = this.getElements( "." + value.cl )
+                    el = this.getElements( "." + value.cl );
                 } else if ( typeof value.key === "string" ) {
                     // key: the string value is a data key,value pair
                     var pair = value.key.match(/^(.+)=(.+)$/);
@@ -120,10 +121,11 @@
             } else {
                 // regular options
                 // this options effect the board
+                var elements;
                 
                 switch ( key ) {
                     case "edit":
-                        var elements = this.getElements();
+                        elements = this.getElements();
                         
                         this.options[ key ] = value;
                         
@@ -181,8 +183,8 @@
                         this._updateGridView();
                         break;
                     case "grid-snap":
-                        var grid = this.options[ "grid" ];
-                        var elements = this.getElements();
+                        var grid = this.options.grid;
+                        elements = this.getElements();
                         
                         this.options[ key ] = value;
                         
@@ -213,8 +215,8 @@
             if ( this.options[ "grid-show" ] ) {
                 var x;
                 var y;
-                var x_step = this.options[ "grid" ][0];
-                var y_step = this.options[ "grid" ][1];
+                var x_step = this.options.grid[0];
+                var y_step = this.options.grid[1];
                 var w = this.element.width();
                 var h = this.element.height();
                 
@@ -259,12 +261,12 @@
         },
         
         stringify: function() {
-            var image = this.options[ "image" ];
+            var image = this.options.image;
             var json = '{';
             
             // default options
-            json += ',"color":"' + this.options[ "color" ] + '"';
-            json += ',"border":"' + this.options[ "border" ] + '"';
+            json += ',"color":"' + this.options.color + '"';
+            json += ',"border":"' + this.options.border + '"';
             if ( image ) {
                 json += ',"image":"' + image + '"';
             } else {
@@ -359,6 +361,6 @@
         
         unSelectAll: function () {
             this.getSelected().removeClass( "ui-selected" );
-        },
+        }
     });
 })(jQuery);
