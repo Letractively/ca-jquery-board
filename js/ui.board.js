@@ -33,6 +33,9 @@
             grid_show: false,
             grid_snap: false,
             animate: 100,
+            // zoom - in view mode only. the zoom option will not work when
+            // editing a new board [ 1 = origianl size ]
+            zoom: 1,
             plugins: []
         },
         

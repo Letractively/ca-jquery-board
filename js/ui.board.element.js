@@ -230,26 +230,42 @@
                     break;
                 case "y":
                     if (value) {
-                        this.element.css( "top", value );
+                        var zoom = this._getBoard().board( "option", "zoom" );
+                        
+                        // convert string like "123px" to 123
+                        value = parseInt( value, 10 );
+                        this.element.css( "top", value * zoom );
                     } else {
                         this.element.css( "top", "0px");
                     }
                     break;
                 case "x":
                     if (value) {
-                        this.element.css( "left", value );
+                        var zoom = this._getBoard().board( "option", "zoom" );
+                        
+                        // convert string like "123px" to 123
+                        value = parseInt( value, 10 );
+                        this.element.css( "left", value * zoom );
                     } else {
                         this.element.css( "left", "0px" );
                     }
                     break;
                  case "h":
                     if (value) {
-                        this.element.height( value );
+                        var zoom = this._getBoard().board( "option", "zoom" );
+                        
+                        // convert string like "123px" to 123
+                        value = parseInt( value, 10 );
+                        this.element.height( value * zoom );
                     }
                     break;
                 case "w":
                     if (value) {
-                        this.element.width( value );
+                        var zoom = this._getBoard().board( "option", "zoom" );
+                        
+                        // convert string like "123px" to 123
+                        value = parseInt( value, 10 );
+                        this.element.width( value * zoom );
                     }
                     break;
                 default:
