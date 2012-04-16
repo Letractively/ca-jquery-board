@@ -182,7 +182,7 @@
             // if this plugin has a setData function, use it
             // if it return true, stop here
             if ( plugin && $.isFunction( plugin.setData ) ) {
-                if ( plugin.setData( key, value ) ) {
+                if ( plugin.setData( {"ui": this.element, "key":key, "value":value} ) ) {
                     return;
                 }
             }
@@ -288,7 +288,7 @@
             // if this plugin has a setValue function, use it
             // if it return true, stop here
             if ( plugin && $.isFunction( plugin.setValue ) ) {
-                if ( plugin.setValue( value, state ) ) {
+                if ( plugin.setValue( {"ui": this.element, "value":value, "state":state} ) ) {
                     return;
                 }
             }
