@@ -146,10 +146,25 @@
             }
         },
         
+        _findPlugin: function () {
+            // get this elements type
+            var element_type = this.element.data( "type" );
+            var plugin = false;
+            
+            // check all plugins for a plugin to match this type
+            $.each( this._getBoard().board( "plugins" ), function () {
+                if ( element_type === this.type ) {
+                    plugin = this;
+                }
+            });
+            
+            return plugin;
+        },
+        
         // react to option changes after initialization
         setData: function( key, value ) {
             // set data in dataset
-            this.element.data( key, value);
+            this.element.data( key, value );
             
             // keep the elements dataset uptodate
             this.element.attr( "data-" + key, value);
@@ -159,6 +174,17 @@
             //  used to set up custom options
             if ( this._getBoard().triggerHandler( "setData" , {"ui": this.element, "key":key, "value":value} ) ) {
                 return;
+            }
+            
+            // check for a plugin matchin this elments type
+            var plugin = this._findPlugin();
+            
+            // if this plugin has a setData function, use it
+            // if it return true, stop here
+            if ( plugin && $.isFunction( plugin.setData ) ) {
+                if ( plugin.setData( key, value ) ) {
+                    return;
+                }
             }
             
             // if we nead to redraw, redraw
@@ -254,6 +280,17 @@
             //  used to set up custom view for a value
             if ( this._getBoard().triggerHandler( "setValue" , {"ui": this.element, "value":value, "state":state} ) ) {
                 return;
+            }
+            
+            // check for a plugin matchin this elments type
+            var plugin = this._findPlugin();
+            
+            // if this plugin has a setValue function, use it
+            // if it return true, stop here
+            if ( plugin && $.isFunction( plugin.setValue ) ) {
+                if ( plugin.setValue( value, state ) ) {
+                    return;
+                }
             }
             
             // write text on object

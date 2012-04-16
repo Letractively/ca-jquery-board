@@ -32,7 +32,8 @@
             grid: [50, 50],
             grid_show: false,
             grid_snap: false,
-            animate: 100
+            animate: 100,
+            plugins: []
         },
         
         // used to store copy / paste data
@@ -201,11 +202,24 @@
                         // update grid
                         this._updateGridView();
                         break;
+                    case "plugin":
+                        if ( typeof value === "object" ) {
+                            this.options.plugins.push( value );
+                        }
+                        break;
                     default:
                         this.options[ key ] = value;
                         break;
                 }
             }
+        },
+        
+        plugins: function () {
+            return this.options.plugins
+        },
+        
+        plugins_clear: function () {
+            this.options.plugins.length = 0;
         },
         
         _updateGridView: function() {
