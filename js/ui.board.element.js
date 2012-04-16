@@ -328,12 +328,15 @@
                 this.element.data( "id", "el" + this.element.index() );
             }
             
+            // get board zoom
+            var zoom = this._getBoard().board( "option", "zoom" );
+            
             // update the position data elements
             //  they may have changed while dragging and resizing
-            this.element.data( "x", this.element.css( "left" ) );
-            this.element.data( "y", this.element.css( "top" ) );
-            this.element.data( "w", this.element.css( "width" ) );
-            this.element.data( "h", this.element.css( "height" ) );
+            this.element.data( "x", parseInt( this.element.css( "left" ), 10 ) / zoom );
+            this.element.data( "y", parseInt( this.element.css( "top" ), 10 ) / zoom );
+            this.element.data( "w", parseInt( this.element.css( "width" ), 10 ) / zoom );
+            this.element.data( "h", parseInt( this.element.css( "height" ), 10 ) / zoom );
         },
         
         stringify: function() {
