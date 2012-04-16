@@ -78,7 +78,18 @@
             
             // highjack the options that start with "element..." and "value..."
             //  use this options to manipulate the board elements
-            if ( key.slice( 0, 7 ) === "element" ) {
+            if ( key.slice( 0, 8 ) === "elements" ) {
+                // this is an elements data option
+                // this options effect group of board-elements
+                // patch by (yair c.)
+                
+                // set the elements
+                var board = this;
+                $.each( value, function(){
+                    el = board.addElement();
+                    el.board_element( "update", this ); 
+                });
+            } else if ( key.slice( 0, 7 ) === "element" ) {
                 // this is an element data option
                 // this options effect the board-elements
                 
