@@ -83,7 +83,7 @@
                     // insert the flower image
                     d.ui.board_element( "setData", "color", "transparent" );
                     d.ui.children( "img.background" ).remove();
-                    d.ui.append( '<img class="background" src="' + url + '"/>' );
+                    d.ui.append( "<img class=\"background\" src=\"" + url + "\"/>" );
                     
                     // do not continue to the default handeler
                     cont = true;
@@ -131,7 +131,7 @@
                     // insert the tree image
                     d.ui.board_element( "setData", "color", "transparent" );
                     d.ui.children( "img.background" ).remove();
-                    d.ui.append( '<img class="background" src="' + url + '"/>' );
+                    d.ui.append( "<img class=\"background\" src=\"" + url + "\"/>" );
                     
                     // do not continue to the default handeler
                     cont = true;

@@ -333,10 +333,10 @@
             
             // update the position data elements
             //  they may have changed while dragging and resizing
-            this.element.data( "x", parseInt( this.element.css( "left" ), 10 ) / zoom );
-            this.element.data( "y", parseInt( this.element.css( "top" ), 10 ) / zoom );
-            this.element.data( "w", parseInt( this.element.css( "width" ), 10 ) / zoom );
-            this.element.data( "h", parseInt( this.element.css( "height" ), 10 ) / zoom );
+            this.element.data( "x", Math.round( parseInt( this.element.css( "left" ), 10 ) / zoom ) );
+            this.element.data( "y", Math.round( parseInt( this.element.css( "top" ), 10 ) / zoom ) );
+            this.element.data( "w", Math.round( parseInt( this.element.css( "width" ), 10 ) / zoom ) );
+            this.element.data( "h", Math.round( parseInt( this.element.css( "height" ), 10 ) / zoom ) );
         },
         
         stringify: function() {
