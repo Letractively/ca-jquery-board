@@ -62,6 +62,9 @@
             
             // make the board selectable
             this.element.selectable();
+            
+            // run actions for all the default options, if needed
+            this.update( this.options );
         },
 
         destroy: function() {

@@ -366,9 +366,17 @@
                 data = this.element.data();
             }
             
+            // if one of the data keys is "type", set it first,
+            // we use the type to react to other data elements
+            if ( typeof data.type === "string" ) {
+                el.setData( "type", data.type );
+            }
+            
             // loop on all data elements and insert them to the element
             $.each(data, function ( k, v ) {
-                el.setData( k, v );
+                if ( k !== "type" ) {
+                    el.setData( k, v );
+                }
             });
         }
     });
