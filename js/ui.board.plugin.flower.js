@@ -70,7 +70,7 @@
                         d.ui.unbind( "click" );
                         
                         // bind the click handler: in view mode,
-                        // clicking deselect all set the value
+                        // clicking set the value
                         d.ui.click( function ( ev ) {
                             // get the element curret value
                             var value = parseInt( $( this ).board_element( "option", "value" ));
@@ -164,7 +164,7 @@
                         d.ui.unbind( "click" );
                         
                         // bind the click handler: in view mode,
-                        // clicking deselect all set the value
+                        // clicking set the value
                         d.ui.click( function ( ev ) {
                             // set the new value to the elemant
                             $(this).board_element( "setValue", 1 );
