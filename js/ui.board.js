@@ -27,11 +27,11 @@
             image: false,
             color: "white",
             border: "gray",
-            border_width: "1px",
-            border_style: "solid",
+            "border-width": "1px",
+            "border-style": "solid",
             grid: [50, 50],
-            grid_show: false,
-            grid_snap: false,
+            "grid-show": false,
+            "grid-snap": false,
             animate: 100,
             zoom: 1,
             plugins: []
@@ -44,18 +44,6 @@
         _create: function() {
             // add custom class
             this.element.addClass( "ui-board" );
-            
-            // set initial options
-            this._setOption( "border-width", this.options.border_width );
-            this._setOption( "border-style", this.options.border_style );
-            
-            this._setOption( "grid", this.options.grid );
-            this._setOption( "grid-show", this.options.grid_show );
-            this._setOption( "grid-snap", this.options.grid_snap );
-            
-            this._setOption( "color", this.options.color );
-            this._setOption( "border", this.options.border );
-            this._setOption( "image", this.options.image );
             
             // create the elements list
             this.element.append( '<ul class="ui-board-elements-list"></ul>' );
