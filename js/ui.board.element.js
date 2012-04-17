@@ -119,7 +119,7 @@
             }
             
             // update all other optional data and value
-            this.update();
+            this.update( this.options );
         },
         
         destroy: function() {
@@ -374,7 +374,9 @@
             
             // loop on all data elements and insert them to the element
             $.each(data, function ( k, v ) {
-                if ( k !== "type" ) {
+                // add all data elements except the administrative data
+                //  e.g. index, prev and objects
+                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && k !== "index" && k !== "type" ) {
                     el.setData( k, v );
                 }
             });
