@@ -93,16 +93,6 @@
             this.element.resizable( this.options.resizable );
             this.element.draggable( this.options.draggable );
             
-            // when clicking deselect all other selected elemens
-            this.element.click( function ( ev ) {
-                // if ctrl key is pressed, do not deselect
-                if ( !ev.ctrlKey ) {
-                    $( this ).siblings( "li.ui-board-element.ui-selected" )
-                        .removeClass( "ui-selected" );
-                }
-                $( this ).addClass( "ui-selected" );
-            });
-            
             // if board is in snap mode, make it's new objects snap
             if (board.board( "option", "grid-snap" )) {
                 var grid = board.board( "option", "grid" );
@@ -113,10 +103,7 @@
             
             // if we are not in edit mode disable the dragging and resizing
             //  options
-            if (!board.board( "option", "edit" )) {
-                this.element.resizable( "disable" );
-                this.element.draggable( "disable" );
-            }
+            this.setData( "edit", board.board( "option", "edit" ) );
             
             // update all other optional data
             this.update( this.options );
@@ -193,6 +180,34 @@
                     if (value) {
                         this.element.attr( "id", value );
                     }
+                    break;
+                case "edit":
+                    if ( value ) {
+                        // if we are in edit mode anable editing size
+                        // and position
+                        this.element.resizable( "enable" );
+                        this.element.draggable( "enable" );
+                        
+                        // bing the click handlers for edit mode
+                        // when clicking deselect all other selected elemens
+                        this.element.click( function ( ev ) {
+                            // if ctrl key is pressed, do not deselect
+                            if ( !ev.ctrlKey ) {
+                                $( this ).siblings( "li.ui-board-element.ui-selected" )
+                                    .removeClass( "ui-selected" );
+                            }
+                            $( this ).addClass( "ui-selected" );
+                        });
+                    } else {
+                        // if we are not in edit mode disable editing size
+                        // and position
+                        this.element.resizable( "disable" );
+                        this.element.draggable( "disable" );
+                        
+                        // unbing the click handlers for edit mode
+                        this.element.unbind( "click" );
+                    }
+                    
                     break;
                 case "image":
                     this.element.children( "img.background" ).remove();

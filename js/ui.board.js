@@ -133,13 +133,9 @@
                         
                         this.options[ key ] = value;
                         
-                        if ( value ) {
-                            elements.resizable( "enable" );
-                            elements.draggable( "enable" );
-                        } else {
-                            elements.resizable( "disable" );
-                            elements.draggable( "disable" );
-                        }
+                        // propagate the edit option to all the board elemants
+                        elements.board_element( "setData", "edit", value );
+                        
                         break;
                     case "image":
                         this.options[ key ] = value;
