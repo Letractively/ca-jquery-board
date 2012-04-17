@@ -101,8 +101,7 @@
                 this.element.draggable( "option", "grid", grid );
             }
             
-            // if we are not in edit mode disable the dragging and resizing
-            //  options
+            // set this elemnt editing mode using the parent board exit option
             this.setData( "edit", board.board( "option", "edit" ) );
             
             // update all other optional data
@@ -183,13 +182,13 @@
                     break;
                 case "edit":
                     if ( value ) {
-                        // if we are in edit mode anable editing size
+                        // if we are in editing mode: anable editing of size
                         // and position
                         this.element.resizable( "enable" );
                         this.element.draggable( "enable" );
                         
-                        // bing the click handlers for edit mode
-                        // when clicking deselect all other selected elemens
+                        // bind the click handler: in edit mode,
+                        // clicking deselect all other selected elemens
                         this.element.click( function ( ev ) {
                             // if ctrl key is pressed, do not deselect
                             if ( !ev.ctrlKey ) {
@@ -199,12 +198,12 @@
                             $( this ).addClass( "ui-selected" );
                         });
                     } else {
-                        // if we are not in edit mode disable editing size
+                        // if we are not in editing mode, disable editing size
                         // and position
                         this.element.resizable( "disable" );
                         this.element.draggable( "disable" );
                         
-                        // unbing the click handlers for edit mode
+                        // unbind the click handler for edit mode
                         this.element.unbind( "click" );
                     }
                     
@@ -363,8 +362,9 @@
             $.each( this.element.data(), function ( k, v ) {
                 // add all data elements except the administrative data
                 //  e.g. index, prev and objects
-                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && k !== "index" ) {
-                    json += ',"' + k + '":"' + v + '"';
+                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && 
+                    k !== "index" && k !== "edit" ) {
+                        json += ',"' + k + '":"' + v + '"';
                 }
             });
             json += '}';
@@ -391,8 +391,9 @@
             $.each(data, function ( k, v ) {
                 // add all data elements except the administrative data
                 //  e.g. index, prev and objects
-                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && k !== "index" && k !== "type" ) {
-                    el.setData( k, v );
+                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && 
+                    k !== "index" && k !== "edit" && k !== "type" ) {
+                        el.setData( k, v );
                 }
             });
         }
