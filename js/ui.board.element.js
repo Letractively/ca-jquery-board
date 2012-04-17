@@ -118,7 +118,7 @@
                 this.element.draggable( "disable" );
             }
             
-            // update all other optional data and value
+            // update all other optional data
             this.update( this.options );
         },
         
