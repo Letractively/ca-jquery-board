@@ -18,20 +18,6 @@
         // create the board in edit mode
         $( "#board" ).board( {"edit": true} );
         
-        // when customizing elemants we can also create new interaction
-        // handelers. in this example we will increase the elemants value 
-        // when we click on it
-        $( "#board" ).on( "click", "li", function ( e, d ) {
-            // get the element curret value
-            var value = parseInt( $( this ).board_element( "option", "value" ));
-            
-            // increase value by one
-            value += 1;
-            
-            // set the new value to the board
-            $(this).board_element( "setValue", value );
-        });
-        
         // load inital board from JSON string (javascript objects are fine too)
         // this example board has some flowers and a tree.
         $( "#board" ).board( "load", '{"image":false,"color":"white","border":"gray","element0":{"index":"0","id":"el0","x":"254px","y":"127px","w":"150px","h":"150px","type":"tree","color":"transparent"},"element1":{"index":"1","id":"el1","x":"381px","y":"65px","w":"150px","h":"150px","type":"cloud","color":"transparent"},"element2":{"index":"2","type":"flower","color":"transparent","id":"el2","x":"254px","y":"294px","w":"71px","h":"67px"},"element3":{"index":"3","id":"el3","x":"475px","y":"267px","w":"71px","h":"67px","type":"flower","color":"transparent"},"element4":{"index":"4","id":"el4","x":"177px","y":"214px","w":"71px","h":"67px","type":"flower","color":"transparent"},"element5":{"index":"5","id":"el5","x":"308px","y":"247px","w":"71px","h":"67px","type":"flower","color":"transparent"}}' );

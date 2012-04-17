@@ -40,6 +40,52 @@
                     // do not continue to the default handeler
                     cont = true;
                     break;
+                case "edit":
+                    if ( d.value ) {
+                        // if we are in editing mode: anable editing of size
+                        // and position
+                        d.ui.resizable( "enable" );
+                        d.ui.draggable( "enable" );
+                        
+                        // unbind the click handler for view mode
+                        d.ui.unbind( "click" );
+                        
+                        // bind the click handler: in edit mode,
+                        // clicking deselect all other selected elemens
+                        d.ui.click( function ( ev ) {
+                            // if ctrl key is pressed, do not deselect
+                            if ( !ev.ctrlKey ) {
+                                $( this ).siblings( "li.ui-board-element.ui-selected" )
+                                    .removeClass( "ui-selected" );
+                            }
+                            $( this ).addClass( "ui-selected" );
+                        });
+                    } else {
+                        // if we are not in editing mode, disable editing size
+                        // and position
+                        d.ui.resizable( "disable" );
+                        d.ui.draggable( "disable" );
+                        
+                        // unbind the click handler for edit mode
+                        d.ui.unbind( "click" );
+                        
+                        // bind the click handler: in view mode,
+                        // clicking deselect all set the value
+                        d.ui.click( function ( ev ) {
+                            // get the element curret value
+                            var value = parseInt( $( this ).board_element( "option", "value" ));
+                            
+                            // increase value by one
+                            value += 1;
+                            
+                            // set the new value to the elemant
+                            $(this).board_element( "setValue", value );
+                        });
+                    }
+                    
+                    // do not continue to the default handeler
+                    cont = true;
+                    break;
                 default:
                     // continue to the default handeler
                     cont = false;
@@ -84,6 +130,46 @@
                     d.ui.board_element( "setData", "color", "transparent" );
                     d.ui.children( "img.background" ).remove();
                     d.ui.append( "<img class=\"background\" src=\"" + url + "\"/>" );
+                    
+                    // do not continue to the default handeler
+                    cont = true;
+                    break;
+                case "edit":
+                    if ( d.value ) {
+                        // if we are in editing mode: anable editing of size
+                        // and position
+                        d.ui.resizable( "enable" );
+                        d.ui.draggable( "enable" );
+                        
+                        // unbind the click handler for view mode
+                        d.ui.unbind( "click" );
+                        
+                        // bind the click handler: in edit mode,
+                        // clicking deselect all other selected elemens
+                        d.ui.click( function ( ev ) {
+                            // if ctrl key is pressed, do not deselect
+                            if ( !ev.ctrlKey ) {
+                                $( this ).siblings( "li.ui-board-element.ui-selected" )
+                                    .removeClass( "ui-selected" );
+                            }
+                            $( this ).addClass( "ui-selected" );
+                        });
+                    } else {
+                        // if we are not in editing mode, disable editing size
+                        // and position
+                        d.ui.resizable( "disable" );
+                        d.ui.draggable( "disable" );
+                        
+                        // unbind the click handler for edit mode
+                        d.ui.unbind( "click" );
+                        
+                        // bind the click handler: in view mode,
+                        // clicking deselect all set the value
+                        d.ui.click( function ( ev ) {
+                            // set the new value to the elemant
+                            $(this).board_element( "setValue", 1 );
+                        });
+                    }
                     
                     // do not continue to the default handeler
                     cont = true;
