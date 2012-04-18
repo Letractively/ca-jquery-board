@@ -357,8 +357,7 @@
             // update none data-set data
             this.updateData();
             
-            // 4 letters start of black listed options that
-            // we do not want to stringify
+            // black listed options that we do not want to stringify
             var black_list = ["edit", "index", "resizable", "draggable", "board_element"];
             
             // create the JSON string
@@ -399,7 +398,7 @@
             // check for a plugin matchin this elments type
             var plugin = this._findPlugin();
             
-            // if this plugin has a white list of options use them
+            // if this plugin has a white list of options: use them
             if ( plugin && ( typeof plugin.optionWhiteList === "object" ) ) {
                 white_list = plugin.optionWhiteList;
             }

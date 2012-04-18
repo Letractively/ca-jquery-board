@@ -81,7 +81,7 @@
             } else if ( typeof value.key === "string" ) {
                 // key: the string value is a data key,value pair
                 var pair = value.key.match(/^(.+)=(.+)$/);
-                if ( pair) {
+                if ( pair ) {
                     el = this.getElements( "[data-" + pair[1] + "=" + pair[2] + "]" );
                 }
             }
