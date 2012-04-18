@@ -64,6 +64,31 @@
             $.Widget.prototype.destroy.call( this );
         },
 
+        _selectElement: function( value ) {
+            // find elments in the board using a value object
+            var el = false;
+                
+            // get the elemants to set
+            if ( typeof value.select === "string" ) {
+                // select: the string value is the selector
+                el = this.getElements( value.select );
+            } else if ( typeof value.id === "string" ) {
+                // id: the string value is the element id
+                el = this.getElements( "#" + value.id );
+            } else if ( typeof value.cl === "string" ) {
+                // cl: the string value is the element class
+                el = this.getElements( "." + value.cl );
+            } else if ( typeof value.key === "string" ) {
+                // key: the string value is a data key,value pair
+                var pair = value.key.match(/^(.+)=(.+)$/);
+                if ( pair) {
+                    el = this.getElements( "[data-" + pair[1] + "=" + pair[2] + "]" );
+                }
+            }
+            
+            return el
+        },
+        
         // react to option changes after initialization
         _setOption: function( key, value ) {
             var el;
@@ -88,37 +113,31 @@
                 // set the element
                 el = this.addElement();
                 el.board_element( "update", value );
+            } else if ( key.slice( 0, 6 ) === "values" ) {
+                // this is an elements value option
+                // this options effect group of board-elements
+                
+                // set the elements
+                var board = this;
+                $.each( value, function(){
+                    // find elments in the board using the value object
+                    el = board._selectElement( this.value );
+                    
+                    // if we found an elemant to set, then set it's value
+                    if ( typeof el === "object" ) {
+                        // set the elemets value
+                        el.board_element( "setValue", this.value.value, this.value.state );
+                    }
+                });
             } else if ( key.slice( 0, 3 ) === "val" ) {
                 // this is an element value option
                 // this options effect the board-elements
                 
-                el = false;
-                
-                // get the elemants to set
-                if ( typeof value.select === "string" ) {
-                    // select: the string value is the selector
-                    el = this.getElements( value.select );
-                } else if ( typeof value.id === "string" ) {
-                    // id: the string value is the element id
-                    el = this.getElements( "#" + value.id );
-                } else if ( typeof value.cl === "string" ) {
-                    // cl: the string value is the element class
-                    el = this.getElements( "." + value.cl );
-                } else if ( typeof value.key === "string" ) {
-                    // key: the string value is a data key,value pair
-                    var pair = value.key.match(/^(.+)=(.+)$/);
-                    if ( pair) {
-                        el = this.getElements( "[data-" + pair[1] + "=" + pair[2] + "]" );
-                    }
-                }
+                // find elments in the board using the value object
+                el = this._selectElement( value );
                 
                 // if we found an elemant to set, then set it's value
-                if ( typeof el === "object" ) {
-                    // if no state, asume normal
-                    if ( typeof value.state !== "string" ) {
-                        value.state = "normal";
-                    }
-                    
+                if ( typeof el === "object" ) {                    
                     // set the elemets value
                     el.board_element( "setValue", value.value, value.state );
                 }
