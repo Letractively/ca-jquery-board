@@ -137,7 +137,7 @@
                 el = this._selectElement( value );
                 
                 // if we found an elemant to set, then set it's value
-                if ( typeof el === "object" ) {                    
+                if ( typeof el === "object" ) {
                     // set the elemets value
                     el.board_element( "setValue", value.value, value.state );
                 }

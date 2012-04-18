@@ -20,6 +20,10 @@
     $.ui.board.prototype.options.plugins.push( {
         type: "flower",
         
+        // options that this plugin requirs to be set first
+        // and by this order
+        optionWhiteList: [ "w", "h", "color" ],
+        
         // init the element object, creates the object view
         // called once, when the object is created or edited
         setData: function ( d ) {

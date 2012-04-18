@@ -357,14 +357,17 @@
             // update none data-set data
             this.updateData();
             
+            // 4 letters start of black listed options that
+            // we do not want to stringify
+            var black_list = ["edit", "index", "resizable", "draggable", "board_element"];
+            
             // create the JSON string
             var json = '{"index":"' + this.element.index() +'"';
             $.each( this.element.data(), function ( k, v ) {
                 // add all data elements except the administrative data
                 //  e.g. index, prev and objects
-                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && 
-                    k !== "index" && k !== "edit" ) {
-                        json += ',"' + k + '":"' + v + '"';
+                if ( k.slice( 0, 4 ) !== "prev" && $.inArray( k, black_list) === -1 ) {
+                    json += ',"' + k + '":"' + v + '"';
                 }
             });
             json += '}';
@@ -375,24 +378,46 @@
         update: function( data ) {
             var el = this;
             
+            // black list options that we do not want to update
+            var black_list = ["edit", "type", "index", "resizable", "draggable", "board_element"];
+            
+            // white list options that we want to update before other options
+            var white_list = [];
+            
             // init the data object
             // if we did not get any data, use the elements initial data
             if ( typeof data !== "object" ) {
                 data = this.element.data();
             }
             
-            // if one of the data keys is "type", set it first,
+            // if one of the data keys is type, set it first,
             // we use the type to react to other data elements
             if ( typeof data.type === "string" ) {
                 el.setData( "type", data.type );
             }
             
+            // check for a plugin matchin this elments type
+            var plugin = this._findPlugin();
+            
+            // if this plugin has a white list of options use them
+            if ( plugin && ( typeof plugin.optionWhiteList === "object" ) ) {
+                white_list = plugin.optionWhiteList;
+            }
+            
+            // if one of the data keys is in the white list, set it now,
+            $.each( white_list, function ( i, k ) {
+                if ( typeof data[ k ] === "string" ) {
+                    el.setData( k, data[ k ] );
+                }
+            });
+            
             // loop on all data elements and insert them to the element
             $.each(data, function ( k, v ) {
                 // add all data elements except the administrative data
-                //  e.g. index, prev and objects
-                if ( typeof v !== "object" && k.slice( 0, 4 ) !== "prev" && 
-                    k !== "index" && k !== "edit" && k !== "type" ) {
+                //  e.g. prev, white listed and black listed options
+                if ( k.slice( 0, 4 ) !== "prev" && 
+                    $.inArray( k, black_list) === -1 &&
+                    $.inArray( k, white_list) === -1) {
                         el.setData( k, v );
                 }
             });
