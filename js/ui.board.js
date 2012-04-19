@@ -95,7 +95,7 @@
             
             // highjack the options that start with "element..." and "value..."
             //  use this options to manipulate the board elements
-            if ( key.slice( 0, 8 ) === "elements" ) {
+            if ( key === "elements" ) {
                 // this is an elements data option
                 // this options effect group of board-elements
                 // patch by (yair c.)
@@ -113,7 +113,7 @@
                 // set the element
                 el = this.addElement();
                 el.board_element( "update", value );
-            } else if ( key.slice( 0, 6 ) === "values" ) {
+            } else if ( key === "values" ) {
                 // this is an elements value option
                 // this options effect group of board-elements
                 
@@ -121,12 +121,12 @@
                 var board = this;
                 $.each( value, function(){
                     // find elments in the board using the value object
-                    el = board._selectElement( this.value );
+                    el = board._selectElement( this );
                     
                     // if we found an elemant to set, then set it's value
-                    if ( typeof el === "object" ) {
+                    if ( el.length !== 0 ) {
                         // set the elemets value
-                        el.board_element( "setValue", this.value.value, this.value.state );
+                        el.board_element( "setValue", this.value, this.state );
                     }
                 });
             } else if ( key.slice( 0, 3 ) === "val" ) {

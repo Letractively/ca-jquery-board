@@ -405,7 +405,7 @@
             
             // if one of the data keys is in the white list, set it now,
             $.each( white_list, function ( i, k ) {
-                if ( typeof data[ k ] === "string" ) {
+                if ( typeof data[ k ] === "undefined" ) {
                     el.setData( k, data[ k ] );
                 }
             });
