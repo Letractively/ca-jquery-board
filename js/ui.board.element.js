@@ -180,6 +180,11 @@
                         this.element.attr( "id", value );
                     }
                     break;
+                case "id":
+                    if (value) {
+                        this.element.attr( "id", value );
+                    }
+                    break;
                 case "edit":
                     if ( value ) {
                         // if we are in editing mode: anable editing of size
@@ -190,6 +195,11 @@
                         // bind the click handler: in edit mode,
                         // clicking deselect all other selected elemens
                         this.element.click( function ( ev ) {
+                            // if shiftKey is pressed and we have an edit dialog, show it
+                            if ( ev.shiftKey && typeof $( this ).board_element( "editDialog" ) === "function" ) {
+                                $( this ).board_element( "editDialog" )();
+                            }
+                            
                             // if ctrl key is pressed, do not deselect
                             if ( !ev.ctrlKey ) {
                                 $( this ).siblings( "li.ui-board-element.ui-selected" )
@@ -358,14 +368,14 @@
             this.updateData();
             
             // black listed options that we do not want to stringify
-            var black_list = ["edit", "index", "resizable", "draggable", "board_element"];
+            var black_list = ["edit", "index", "resizable", "draggable", "selectableItem", "board_element"];
             
             // create the JSON string
             var json = '{"index":"' + this.element.index() +'"';
             $.each( this.element.data(), function ( k, v ) {
                 // add all data elements except the administrative data
-                //  e.g. index, prev and objects
-                if ( k.slice( 0, 4 ) !== "prev" && $.inArray( k, black_list) === -1 ) {
+                //  e.g. black listed
+                if ( $.inArray( k, black_list) === -1 ) {
                     json += ',"' + k + '":"' + v + '"';
                 }
             });
@@ -378,7 +388,7 @@
             var el = this;
             
             // black list options that we do not want to update
-            var black_list = ["edit", "type", "index", "resizable", "draggable", "board_element"];
+            var black_list = ["edit", "type", "index", "resizable", "draggable", "selectableItem", "board_element"];
             
             // white list options that we want to update before other options
             var white_list = [];
@@ -413,9 +423,8 @@
             // loop on all data elements and insert them to the element
             $.each(data, function ( k, v ) {
                 // add all data elements except the administrative data
-                //  e.g. prev, white listed and black listed options
-                if ( k.slice( 0, 4 ) !== "prev" && 
-                    $.inArray( k, black_list) === -1 &&
+                //  e.g. white listed and black listed options
+                if ( $.inArray( k, black_list) === -1 &&
                     $.inArray( k, white_list) === -1) {
                         el.setData( k, v );
                 }

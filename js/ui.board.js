@@ -17,11 +17,11 @@
 (function( $ ) {
     $.widget( "ui.board", {
         // set default values
-        // do not set options that start with element or value.
+        // do not set options - elements or values.
         // this names are reserved for options that effect the board elements.
-        // options that effect the elements starts with:
-        //      element - effect element static data
-        //      value - effect element dynamic view
+        // options that effect the elements are:
+        //      elements - effect element static data
+        //      values - effect element dynamic view
         options: {
             edit: false,
             image: false,
@@ -106,13 +106,6 @@
                     el = board.addElement();
                     el.board_element( "update", this ); 
                 });
-            } else if ( key.slice( 0, 7 ) === "element" ) {
-                // this is an element data option
-                // this options effect the board-elements
-                
-                // set the element
-                el = this.addElement();
-                el.board_element( "update", value );
             } else if ( key === "values" ) {
                 // this is an elements value option
                 // this options effect group of board-elements
@@ -129,18 +122,6 @@
                         el.board_element( "setValue", this.value, this.state );
                     }
                 });
-            } else if ( key.slice( 0, 3 ) === "val" ) {
-                // this is an element value option
-                // this options effect the board-elements
-                
-                // find elments in the board using the value object
-                el = this._selectElement( value );
-                
-                // if we found an elemant to set, then set it's value
-                if ( typeof el === "object" ) {
-                    // set the elemets value
-                    el.board_element( "setValue", value.value, value.state );
-                }
             } else {
                 // regular options
                 // this options effect the board
@@ -297,20 +278,19 @@
             var json = '{';
             
             // default options
-            json += ',"color":"' + this.options.color + '"';
+            json += '"color":"' + this.options.color + '"';
             json += ',"border":"' + this.options.border + '"';
+            json += ',"zoom":' + this.options.zoom + '';
             if ( image ) {
                 json += ',"image":"' + image + '"';
             } else {
                 json += ',"image":false';
             }
             
-            // stringify all the elments
-            this.getElements().each( function () {
-                json += ',"element' + $( this ).index() + '":' + $( this ).board_element( "stringify" );
-            });
-            
-            json += '}';
+            // build the elements list
+            json += ',"elements":[' + $.map( this.getElements(), function( el ){
+              return $( el ).board_element( "stringify" );
+            }).join( "," ) + ']}';
             
             return json;
         },
@@ -343,9 +323,9 @@
                 // and implement them on the board elements
                 // regular options will be implemented on the board.
                 //
-                // options that effect the elements starts with:
-                //      element - effect element static data
-                //      value - effect element dynamic view
+                // options that effect the elements are:
+                //      elements - effect element static data
+                //      values - effect element dynamic view
                 el._setOption( k, v );
             });
         },
