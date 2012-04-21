@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link type="text/css" href="css/redmond/jquery-ui-1.8.19.custom.css" rel="stylesheet" />
+    <link type="text/css" href="css/ui.board.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/ui.board.element.js"></script>
+    <script type="text/javascript" src="js/ui.board.js"></script>
+    <script type="text/javascript" src="js/ui.board.edit.js"></script>
+    <script type="text/javascript" src="js/ui.board.order.js"></script>
+    <script type="text/javascript" src="js/ui.board.arrange.js"></script>
+    <script type="text/javascript" src="js/ui.board.plugin.flower.js"></script>
+    <script type="text/javascript" src="js/ui.board.element.form.js"></script>
+    <script>
+    $(function() {
+        
+        // create the board in edit mode
+        $( "#board" ).board( {"edit": true} );
+        
+        // load inital board from JSON string (javascript objects are fine too)
+        // this example board has some flowers and a tree.
+        $( "#board" ).board( "load", '{"color":"white","border":"gray","image":false,"elements":[{"index":"0","disabled":"false","value":"0","animate":"100","type":"tree","color":"transparent","id":"el0","x":"254","y":"127","w":"150","h":"150"},{"index":"1","disabled":"false","value":"0","animate":"100","type":"cloud","color":"transparent","id":"el1","x":"381","y":"65","w":"150","h":"150"},{"index":"2","disabled":"false","value":"0","animate":"100","type":"flower","color":"transparent","id":"el2","x":"254","y":"294","w":"150","h":"150"},{"index":"3","disabled":"false","value":"0","animate":"100","type":"flower","color":"transparent","id":"el3","x":"475","y":"267","w":"150","h":"150"},{"index":"4","disabled":"false","value":"0","animate":"100","type":"flower","color":"transparent","id":"el4","x":"177","y":"214","w":"150","h":"150"},{"index":"5","disabled":"false","value":"0","animate":"100","type":"flower","color":"transparent","id":"el5","x":"308","y":"247","w":"150","h":"150"}]}' );
+        
+        // set random values to the flowers
+        randomColors();
+    });
+    
+    // global function to set random values to the flowers
+    function randomColors() {
+        $( "#board li[data-type=flower]" ).each( function() {
+            $( this ).board_element( "setValue", Math.random() * 10 );
+        });
+    }
+    
+    </script>
+    <title>jQuery ui board</title>
+</head>
+
+<body>
+    
+    <div>
+        <!-- edit toolbar -->
+        <input type="image" title="copy" onClick='
+            $( "#board" ).board( "copy" );
+        '  src="example-img/buttons/edit_copy.png" />
+        <input type="image" title="paste" onClick='
+            $( "#board" ).board( "paste" );
+        '  src="example-img/buttons/edit_paste.png" />
+        <input type="image" title="delete" onClick='
+            $( "#board" ).board( "delElement" );
+        '  src="example-img/buttons/edit_delete.png" />
+        <input type="image" title="new flower" onClick='
+            // add existing element with type
+            var el = $( "<li data-type=\"flower\"></li>" );
+            $( "#board" ).board( "addElement", el );
+        '  src="example-img/objects/flower-1.png" width="60" height="60" />
+        <input type="image" title="new cloud" onClick='
+            // add an element, and then set its type
+            var el = $( "#board" ).board( "addElement" );
+            el.board_element( "setData", "type", "cloud" );
+        '  src="example-img/objects/cloud-1.png" width="60" height="60" />
+        <input type="image" title="new tree" onClick='
+            // update the board with a new element
+            $( "#board" ).board( "update", {element: {type: "tree"}} );
+        '  src="example-img/objects/tree.png" width="60" height="60" />
+        
+        <!-- canvas toolbar -->
+        <input type="image" title="grid" onClick='
+            $( this ).toggleClass( "on" );
+            
+            var on = $( this ).hasClass( "on" );
+            $( "#board" ).board( "option", "grid-show", on );
+            $( "#board" ).board( "option", "grid-snap", on );
+        '  src="example-img/buttons/grid_xy.png" />
+        <input class="on" type="image" title="edit" onClick='
+            $( this ).toggleClass( "on" );
+            
+            var on = $( this ).hasClass( "on" );
+            $( "#board" ).board( "option", "edit", on );
+        '  src="example-img/buttons/edit_paste_style.png" />
+        
+        <input type="image" title="down" onClick='
+            $( "#board" ).board( "downElement" );
+        '  src="example-img/buttons/selection-down.png" />
+        <input type="image" title="up" onClick='
+            $( "#board" ).board( "upElement" );
+        '  src="example-img/buttons/selection-up.png" />
+        
+        <input type="image" title="dump JSON" onClick='
+            console.log( $( "#board" ).board( "stringify" ) );
+        '  src="example-img/buttons/file_export.png" />
+    </div>
+    
+    <div>
+        <!-- arrange toolbar -->
+        <input type="image" title="align horizontal center" onClick='
+            $( "#board" ).board( "alignHorizontalCenter" );
+        '  src="example-img/buttons/align-horizontal-center.png" />
+        <input type="image" title="align horizontal left" onClick='
+            $( "#board" ).board( "alignHorizontalLeft" );
+        '  src="example-img/buttons/align-horizontal-left.png" />
+        <input type="image" title="align horizontal right" onClick='
+            $( "#board" ).board( "alignHorizontalRight" );
+        '  src="example-img/buttons/align-horizontal-right.png" />
+        
+        <input type="image" title="align vertical center" onClick='
+            $( "#board" ).board( "alignVerticalCenter" );
+        '  src="example-img/buttons/align-vertical-center.png" />
+        <input type="image" title="align vertical top" onClick='
+            $( "#board" ).board( "alignVerticalTop" );
+        '  src="example-img/buttons/align-vertical-top.png" />
+        <input type="image" title="align vertical bottom" onClick='
+            $( "#board" ).board( "alignVerticalBottom" );
+        '  src="example-img/buttons/align-vertical-bottom.png" />
+        
+        <input type="image" title="align to grid" onClick='
+            $( "#board" ).board( "alignGridFull" );
+        '  src="example-img/buttons/edit_new.png" />
+        
+        <input type="image" title="distribute horizontal left" onClick='
+            $( "#board" ).board( "distributeHorizontalLeft" );
+        '  src="example-img/buttons/distribute-horizontal-left.png" />
+        <input type="image" title="distribute vertical top" onClick='
+            $( "#board" ).board( "distributeVerticalTop" );
+        '  src="example-img/buttons/distribute-vertical-top.png" />
+        
+        <!-- randomize colors -->
+        <input type="image" title="randomize colors" onClick='
+           randomColors();
+        '  src="example-img/objects/flower-3.png" width="60" height="60" />
+    </div>
+    <div id="board"></div>
+</body>
+</html>

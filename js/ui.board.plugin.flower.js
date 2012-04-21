@@ -58,8 +58,8 @@
                         // clicking deselect all other selected elemens
                         d.ui.click( function ( ev ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $( this ).board_element( "editDialog" ) === "function" ) {
-                                $( this ).board_element( "editDialog" )();
+                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) === "function" ) {
+                                $( this ).board_element( "runEditDialog" )();
                             }
                             
                             // if ctrl key is pressed, do not deselect
@@ -157,8 +157,8 @@
                         // clicking deselect all other selected elemens
                         d.ui.click( function ( ev ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $( this ).board_element( "editDialog" ) === "function" ) {
-                                $( this ).board_element( "editDialog" )();
+                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) === "function" ) {
+                                $( this ).board_element( "runEditDialog" )();
                             }
                             
                             // if ctrl key is pressed, do not deselect

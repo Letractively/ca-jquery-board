@@ -196,8 +196,8 @@
                         // clicking deselect all other selected elemens
                         this.element.click( function ( ev ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $( this ).board_element( "editDialog" ) === "function" ) {
-                                $( this ).board_element( "editDialog" )();
+                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) === "function" ) {
+                                $( this ).board_element( "runEditDialog" )();
                             }
                             
                             // if ctrl key is pressed, do not deselect
@@ -424,8 +424,8 @@
             $.each(data, function ( k, v ) {
                 // add all data elements except the administrative data
                 //  e.g. white listed and black listed options
-                if ( $.inArray( k, black_list) === -1 &&
-                    $.inArray( k, white_list) === -1) {
+                if ( $.inArray( k, black_list ) === -1 &&
+                    $.inArray( k, white_list ) === -1 ) {
                         el.setData( k, v );
                 }
             });
