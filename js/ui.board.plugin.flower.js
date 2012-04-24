@@ -62,7 +62,11 @@
                         d.ui.click( function ( ev, el ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
                             if ( ev.shiftKey && typeof $(this).board_element( "runEditDialog" ) !== "undefined" ) {
-                                $(this).board_element( "runEditDialog", ["color"] );
+                                $(this).board_element( "runEditDialog", [ 
+                                    { title:"Type", id:"type", 
+                                        widget:"autocomplete", widget_data:{ source: ["normal"] },
+                                        validator: {min: 3, max: 7} }, 
+                                    { title: "Background color", id: "color" }] );
                             }
                             
                             // clicking deselect all other selected elemens

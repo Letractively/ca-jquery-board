@@ -112,14 +112,18 @@
     $.extend($.ui.board_element.prototype, {
         form: function( data_list ) {
             var el = this.element;
+            var black_list = ["index", "resizable", "draggable", "value", "disabled",
+                "selectableItem", "board_element", "x", "y", "w", "h", "edit"];
             
             // if no element, use the selected element
             if ( typeof data_list === "undefined" ) {
-                data_list = [ 
-                    { title:"Type", id:"type", 
-                        widget:"autocomplete", widget_data:{ source: ["normal"] },
-                        validator: {min: 3, max: 7} }, 
-                    { title: "Background color", id: "color" }];
+                data_list = $.map( el.data(), function ( v, k ) {
+                    if ( $.inArray( k, black_list) === -1 ) {
+                        return k;
+                    } else {
+                        return null;
+                    }
+                });
             }
             
             // create a from with a fieldset
