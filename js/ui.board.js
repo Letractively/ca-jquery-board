@@ -142,7 +142,7 @@
                         
                         this.element.children( "img.background" ).remove();
                         if (value) {
-                            this.element.append( '<img class="background" src="' + value + '"/>' );
+                            this.element.prepend( '<img class="background" src="' + value + '"/>' );
                         }
                         break;
                     case "color":

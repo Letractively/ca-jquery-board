@@ -65,7 +65,7 @@
                     }
                     
                     // also drag all other selected elements
-                    $( ".ui-board-element.ui-selected" ).not( ev.target ).each( function () {
+                    $( ".ui-board-element.ui-selected" ).not( ".ui-draggable-dragging" ).each( function () {
                         $( this ).animate({
                             top: '+=' + div_top,
                             left: '+=' + div_left
@@ -203,7 +203,7 @@
                             }
                             
                             // if ctrl key is pressed, do not deselect
-                            if ( !ev.ctrlKey ) {
+                            if ( !ev.ctrlKey && !$( this ).hasClass( "ui-selected" ) ) {
                                 $( this ).siblings( "li.ui-board-element.ui-selected" )
                                     .removeClass( "ui-selected" );
                             }

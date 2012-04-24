@@ -71,7 +71,7 @@
                             
                             // clicking deselect all other selected elemens
                             // if ctrl key is pressed, do not deselect
-                            if ( !ev.ctrlKey ) {
+                            if ( !ev.ctrlKey && !$( this ).hasClass( "ui-selected" ) ) {
                                 $( this ).siblings( "li.ui-board-element.ui-selected" )
                                     .removeClass( "ui-selected" );
                             }
@@ -174,7 +174,7 @@
                             }
                             
                             // if ctrl key is pressed, do not deselect
-                            if ( !ev.ctrlKey ) {
+                            if ( !ev.ctrlKey && !$( this ).hasClass( "ui-selected" ) ) {
                                 $( this ).siblings( "li.ui-board-element.ui-selected" )
                                     .removeClass( "ui-selected" );
                             }
