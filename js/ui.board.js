@@ -104,7 +104,7 @@
                 var board = this;
                 $.each( value, function(){
                     el = board.addElement();
-                    el.board_element( "update", this ); 
+                    el.board_element( "update", this );
                 });
             } else if ( key === "values" ) {
                 // this is an elements value option

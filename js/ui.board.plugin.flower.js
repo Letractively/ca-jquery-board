@@ -41,6 +41,10 @@
                     d.ui.children( "img.background" ).remove();
                     d.ui.append( "<img class=\"background\" src=\"" + url + "\"/>" );
                     
+                    // we nead to manualy re-set the edit data, it is on the update function
+                    // black list and will not be called on normal update
+                    d.ui.board_element( "setData", "edit", d.ui.data( "edit" ) );
+                    
                     // do not continue to the default handeler
                     cont = true;
                     break;
@@ -139,6 +143,10 @@
                     d.ui.board_element( "setData", "color", "transparent" );
                     d.ui.children( "img.background" ).remove();
                     d.ui.append( "<img class=\"background\" src=\"" + url + "\"/>" );
+                    
+                    // we nead to manualy re-set the edit data, it is on the update function
+                    // black list and will not be called on normal update
+                    d.ui.board_element( "setData", "edit", d.ui.data( "edit" ) );
                     
                     // do not continue to the default handeler
                     cont = true;

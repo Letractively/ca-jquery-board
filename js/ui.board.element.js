@@ -93,6 +93,11 @@
             this.element.resizable( this.options.resizable );
             this.element.draggable( this.options.draggable );
             
+            // update all other optional data
+            this.update();
+            
+            // set options that are inherited from the board_
+            
             // if board is in snap mode, make it's new objects snap
             if (board.board( "option", "grid-snap" )) {
                 var grid = board.board( "option", "grid" );
@@ -103,9 +108,6 @@
             
             // set this elemnt editing mode using the parent board exit option
             this.setData( "edit", board.board( "option", "edit" ) );
-            
-            // update all other optional data
-            this.update();
         },
         
         destroy: function() {
