@@ -105,7 +105,7 @@
             this.setData( "edit", board.board( "option", "edit" ) );
             
             // update all other optional data
-            this.update( this.options );
+            this.update();
         },
         
         destroy: function() {
@@ -196,8 +196,8 @@
                         // clicking deselect all other selected elemens
                         this.element.click( function ( ev ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) === "function" ) {
-                                $( this ).board_element( "runEditDialog" )();
+                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) !== "undefined" ) {
+                                $( this ).board_element( "runEditDialog" );
                             }
                             
                             // if ctrl key is pressed, do not deselect

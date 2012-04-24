@@ -55,16 +55,13 @@
                         d.ui.unbind( "click" );
                         
                         // bind the click handler: in edit mode,
-                        // clicking deselect all other selected elemens
                         d.ui.click( function ( ev, el ) {
-                            console.log($(this).board_element( "runEditDialog" ), ev, el);
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $(this).board_element( "runEditDialog" ) === "function" ) {
-                                console.log("hello ");
-                                $(this).board_element( "runEditDialog", ["cat","mouse"] )();
+                            if ( ev.shiftKey && typeof $(this).board_element( "runEditDialog" ) !== "undefined" ) {
+                                $(this).board_element( "runEditDialog", ["color"] );
                             }
-                            console.log("hello iii");
                             
+                            // clicking deselect all other selected elemens
                             // if ctrl key is pressed, do not deselect
                             if ( !ev.ctrlKey ) {
                                 $( this ).siblings( "li.ui-board-element.ui-selected" )
