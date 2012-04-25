@@ -378,6 +378,11 @@
                 // add all data elements except the administrative data
                 //  e.g. black listed
                 if ( $.inArray( k, black_list) === -1 ) {
+                    // check for strings and excape them
+                    if ( typeof v === 'string' ){
+                        // replace " to \"
+                        v = v.replace(/"/g, '\\"');
+                    }
                     json += ',"' + k + '":"' + v + '"';
                 }
             });
