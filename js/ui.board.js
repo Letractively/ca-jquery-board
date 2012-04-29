@@ -131,14 +131,14 @@
                     case "edit":
                         elements = this.getElements();
                         
-                        this.options[ key ] = value;
+                        this.options.edit = value;
                         
                         // propagate the edit option to all the board elemants
                         elements.board_element( "setData", "edit", value );
                         
                         break;
                     case "image":
-                        this.options[ key ] = value;
+                        this.options.image = value;
                         
                         this.element.children( "img.background" ).remove();
                         if (value) {
@@ -146,7 +146,7 @@
                         }
                         break;
                     case "color":
-                        this.options[ key ] = value;
+                        this.options.color = value;
                         if (value) {
                             this.element.css( "background-color" , value );
                         } else {
@@ -154,7 +154,7 @@
                         }
                         break;
                     case "border":
-                        this.options[ key ] = value;
+                        this.options.border = value;
                         if (value) {
                             this.element.css( "border-color", value );
                         } else {
@@ -162,7 +162,7 @@
                         }
                         break;
                     case "border-width":
-                        this.options[ key ] = value;
+                        this.options[ "border-width" ] = value;
                         if (value) {
                             this.element.css( "border-width", value );
                         } else {
@@ -170,7 +170,7 @@
                         }
                         break;
                     case "border-style":
-                        this.options[ key ] = value;
+                        this.options[ "border-style" ] = value;
                         if (value) {
                             this.element.css( "border-style", value );
                         } else {
@@ -178,7 +178,14 @@
                         }
                         break;
                     case "grid":
-                        this.options[ key ] = value;
+                        this.options.grid = value;
+                        
+                        // re-set the sanpping
+                        if ( this.options[ "grid-snap" ] ) {
+                            elements.resizable( "option", "grid", grid );
+                            elements.draggable( "option", "grid", grid );
+                        }
+                        
                         // update grid
                         this._updateGridView();
                         break;
@@ -198,6 +205,7 @@
                         break;
                     case "grid-show":
                         this.options[ key ] = value;
+                        
                         // update grid
                         this._updateGridView();
                         break;

@@ -329,6 +329,14 @@
                 var w = Math.round( $( this ).width() / step_x ) * step_x;
                 var h = Math.round( $( this ).height() / step_y ) * step_y;
                 
+                // do not allow for zero width or height
+                if ( w === 0 ) {
+                    w = step_x;
+                }
+                if ( h === 0 ) {
+                    h = step_y;
+                }
+                
                 $( this ).animate( {top: y, left: x, width: w, height: h}, duration );
             });
         }
