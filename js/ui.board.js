@@ -182,6 +182,8 @@
                         
                         // re-set the sanpping
                         if ( this.options[ "grid-snap" ] ) {
+                            elements = this.getElements();
+                            
                             elements.resizable( "option", "grid", value );
                             elements.draggable( "option", "grid", value );
                         }
