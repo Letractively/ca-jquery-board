@@ -28,7 +28,7 @@
                 handles: 'ne, se, sw, nw',
                 
                 // also resize all selected elements
-                alsoResize: ".ui-board-element.ui-selected",
+                alsoResize: ".ui-board-element.ui-selected:not(.ui-state-disabled)",
                 
                 // rewrite the default start and stop functions
                 start: function ( ev, ui ) {
@@ -65,7 +65,7 @@
                     }
                     
                     // also drag all other selected elements
-                    $( ".ui-board-element.ui-selected" ).not( ".ui-draggable-dragging" ).each( function () {
+                    $( ".ui-board-element.ui-selected:not(.ui-state-disabled)" ).not( ".ui-draggable-dragging" ).each( function () {
                         $( this ).animate({
                             top: '+=' + div_top,
                             left: '+=' + div_left
