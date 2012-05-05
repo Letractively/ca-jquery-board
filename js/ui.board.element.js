@@ -38,7 +38,7 @@
                 },
                 stop: function ( ev, ui ) {
                     // make the current element seleted
-                    $( ev.target ).addClass( "ui-selected" );
+                    $( ui.element ).addClass( "ui-selected" );
                 }
             },
             
@@ -73,7 +73,7 @@
                     });
                     
                     // make the current element seleted
-                    $( ev.target ).addClass( "ui-selected" );
+                    $( ui.helper ).addClass( "ui-selected" );
                 }
             }
         },
