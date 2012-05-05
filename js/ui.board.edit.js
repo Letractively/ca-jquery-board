@@ -84,7 +84,7 @@
                 
                 // remove all selections
                 $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
-                    
+                
                 // copy the clipboard
                 this._clipbaord.each( function () {
                     var x = parseInt( $(this).data( "x" ), 10 );
@@ -92,9 +92,6 @@
                     var w = parseInt( $(this).data( "w" ), 10 );
                     var h = parseInt( $(this).data( "h" ), 10 );
                     var new_element = board.addElement();
-                    
-                    // make current element a selected one
-                    new_element.addClass( "ui-selected" );
                     
                     // set initial position and sise
                     new_element.board_element( "setData", "x", x - offset_x );
@@ -104,6 +101,10 @@
                     
                     // copy data
                     board.pasteStyle(new_element, $(this));
+                    
+                    // make current element a selected one
+                    new_element.addClass( "ui-selected" );
+                    new_element.children().addClass( "ui-selected" );
                 });
             }
         }
