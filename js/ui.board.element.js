@@ -380,8 +380,8 @@
                 if ( $.inArray( k, black_list) === -1 ) {
                     // check for strings and excape them
                     if ( typeof v === 'string' ){
-                        // replace " to \"
-                        v = v.replace(/"/g, '\\"');
+                        // escape " and \
+                        v = v.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
                     }
                     json += ',"' + k + '":"' + v + '"';
                 }
