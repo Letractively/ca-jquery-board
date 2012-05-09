@@ -280,7 +280,7 @@
         },
         
         getSelected: function() {
-            return this.getElements( ".ui-selected" );
+            return this.getElements( ".ui-selected:not(.ui-state-disabled)" );
         },
         
         stringify: function() {
