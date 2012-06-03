@@ -96,6 +96,7 @@ li.ui-board-element.ui-resizable {
 
 li.ui-board-element.ui-resizable-disabled {
   opacity: 1;
+  filter: alpha(opacity = 100);
   border-color: transparent;
 }
 
