@@ -32,13 +32,19 @@
                 
                 // rewrite the default start and stop functions
                 start: function ( ev, ui ) {
-                    if (!$( ev.target ).hasClass( "ui-selected" )) {
-                        $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
+                    var el = $(ev.target);
+                    if ( !el.is("li") ) {
+                        el = el.parent();
                     }
-                },
-                stop: function ( ev, ui ) {
+                    
+                    // if ctrl key is pressed, do not deselect
+                    if ( !ev.ctrlKey && !el.hasClass( "ui-selected" ) ) {
+                        $( this ).siblings( "li.ui-board-element.ui-selected" )
+                            .removeClass( "ui-selected" );
+                    }
+                    
                     // make the current element seleted
-                    $( ui.element ).addClass( "ui-selected" );
+                    $( ui.helper ).addClass( "ui-selected" );
                 }
             },
             
@@ -46,9 +52,19 @@
             draggable: {
                 // rewrite the default start and stop functions
                 start: function ( ev, ui ) {
-                    if (!$( ev.target ).hasClass( "ui-selected" )) {
-                        $( ".ui-board-element.ui-selected" ).removeClass( "ui-selected" );
+                    var el = $(ev.target);
+                    if ( !el.is("li") ) {
+                        el = el.parent();
                     }
+                    
+                    // if ctrl key is pressed, do not deselect
+                    if ( !ev.ctrlKey && !el.hasClass( "ui-selected" ) ) {
+                        $( this ).siblings( "li.ui-board-element.ui-selected" )
+                            .removeClass( "ui-selected" );
+                    }
+                    
+                    // make the current element seleted
+                    $( ui.helper ).addClass( "ui-selected" );
                 },
                 stop: function ( ev, ui ) {
                     var animate = $( this ).board_element("option", "animate");
@@ -71,9 +87,6 @@
                             left: '+=' + div_left
                         }, animate);
                     });
-                    
-                    // make the current element seleted
-                    $( ui.helper ).addClass( "ui-selected" );
                 }
             }
         },
@@ -151,6 +164,10 @@
         
         // react to option changes after initialization
         setData: function( key, value ) {
+            if (value === 'null'){
+                value = null;
+            }
+            
             // set data in dataset
             this.element.data( key, value );
             
@@ -182,11 +199,6 @@
                         this.element.attr( "id", value );
                     }
                     break;
-                case "id":
-                    if (value) {
-                        this.element.attr( "id", value );
-                    }
-                    break;
                 case "edit":
                     if ( value ) {
                         // if we are in editing mode: anable editing of size
@@ -198,7 +210,7 @@
                         // clicking deselect all other selected elemens
                         this.element.click( function ( ev ) {
                             // if shiftKey is pressed and we have an edit dialog, show it
-                            if ( ev.shiftKey && typeof $( this ).board_element( "runEditDialog" ) !== "undefined" ) {
+                            if ( ev.altKey && typeof $( this ).board_element( "runEditDialog" ) !== "undefined" ) {
                                 $( this ).board_element( "runEditDialog" );
                             }
                             
@@ -283,6 +295,7 @@
                         // convert string like "123px" to 123
                         value = parseInt( value, 10 );
                         this.element.height( value * zoom );
+                        this.element.css( "line-height", value * zoom + "px");
                     }
                     break;
                 case "w":
@@ -395,7 +408,7 @@
             var el = this;
             
             // black list options that we do not want to update
-            var black_list = ["edit", "type", "index", "resizable", "draggable", "selectableItem", "board_element"];
+            var black_list = ["edit", "type", "index", "resizable", "draggable", "droppable", "selectableItem", "board_element"];
             
             // white list options that we want to update before other options
             var white_list = [];

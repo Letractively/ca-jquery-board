@@ -49,7 +49,7 @@
             this.element.append( '<ul class="ui-board-elements-list"></ul>' );
             
             // make the board selectable
-            this.element.selectable();
+            this.element.selectable({ cancel: ".ui-board-elements-list" });
             
             // run actions for all the default options, if needed
             this.update( this.options );
